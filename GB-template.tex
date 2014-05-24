@@ -1,0 +1,47 @@
+%!TEX program = xelatex
+\documentclass{GB-template}
+
+% use parameter
+\ICS{这里输入 ICS 号}
+\fenlei{这里输入分类号}
+\biaozhunhao{在这里输入标准号}
+\daitibiaozhunhao{在这里输入代替标准号}
+\name{标准名称}
+\enname{标准名称的英文译名}
+\conformity{（与国际标准一致性的标识）}
+\department{国家标准发布部门}
+\fabudate{XXXX-XX-XX}
+\shishidate{XXXX-XX-XX}
+
+\begin{document}
+\bibliographystyle{gbt7714-2005}
+\frontmatter
+\renewcommand{\thepage}{\Roman{page}}
+% titlepage
+\maketitlepage
+\patchchapter
+\tableofcontents\listoffigures\listoftables
+\restorechapter
+\begin{preamble}{前言}
+    前言和序言有什么差别呢\index{前言}？前言和序言有什么差别呢？前言和序言有什么差别呢？前言和序言有什么差别呢？前言和序言有什么差别呢？
+\end{preamble}
+\begin{preamble}{序言}
+    前言和序言有什么差别呢\index{序言}？前言和序言有什么差别呢？前言和序言有什么差别呢？前言和序言有什么差别呢？前言和序言有什么差别呢？
+\end{preamble}
+\mainmatter
+\chapter{章、条的}
+\section{编号和标题}
+\subsection{用五号黑体}
+\subsubsection{标注条文、列项及其编号用五号宋体}
+\begin{figure}[htb]
+\centering
+\rule{4cm}{3cm}
+\caption{图表的标题用 5 号黑体字}\label{fig:dummyfigure}
+\end{figure}
+
+让我们看看脚注的样子\footnote{脚注的标号应该是小五号宋体。如果脚注特别长的话，换行应该对齐。如果脚注特别长的话，换行应该对齐。如果脚注特别长的话，换行应该对齐。如果脚注特别长的话，换行应该对齐。如果脚注特别长的话，换行应该对齐。如果脚注特别长的话，换行应该对齐。如果脚注特别长的话，换行应该对齐。}。
+\appendix
+\autoclearpage
+\gchapter{规范型附录标题}
+\zchapter{资料性附录标题}
+\end{document}
