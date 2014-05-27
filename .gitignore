@@ -17,4 +17,6 @@ test.py
 *.idx
 *.ilg
 *.ind
+*.ist
+*.xdy
 GB-template*.pdf

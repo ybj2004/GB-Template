@@ -17,7 +17,8 @@
 \RequirePackage{titlesec}
 \RequirePackage{titletoc}
 \RequirePackage{hologo}
-\RequirePackage{makeidx}
+\RequirePackage{letltxmacro}
+\RequirePackage[xindy]{imakeidx}
 
 % ----- Paper Layout
 \geometry{papersize = {210mm, 297mm}}
@@ -51,7 +52,7 @@
 \let\LiamOldMainmatter\mainmatter
 \renewcommand{\mainmatter}{\LiamOldMainmatter%
     \chapter*{\usename}%
-    \CTEXsetup[name = {,}, number = {\arabic{chapter}}, format = {\zihao{5}\heiti}, nameformat = {}, aftername = {\quad}, titleformat = {}, beforeskip = {-3.5ex plus -1ex minus -.2ex}, afterskip = {2.3ex plus .2ex}, indent = {0pt}]{chapter}%
+    \CTEXsetup[name = {,}, number = {\arabic{chapter}}, format = {\zihao{5}\heiti}, nameformat = {}, aftername = {\quad}, titleformat = {}, beforeskip = {0ex}, afterskip = {2.3ex plus .2ex}, indent = {0pt}]{chapter}%
     \CTEXsetup[name = {,}, number = {\arabic{chapter}.\arabic{section}}, format = {\zihao{5}\heiti}, nameformat = {}, aftername = {\quad}, titleformat = {}, beforeskip = {-.5em plus -.1em minus -.1em}, afterskip = {.5em plus .1em}, indent = {0pt}]{section}%
     \CTEXsetup[name = {,}, number = {\arabic{chapter}.\arabic{section}.\arabic{subsection}}, format = {\zihao{5}\heiti}, nameformat = {}, aftername = {\quad}, titleformat = {}, beforeskip = {-.5em plus -.1em minus -.1em}, afterskip = {.5em plus .1em}, indent = {0pt}]{subsection}%
     \CTEXsetup[name = {,}, number = {\arabic{chapter}.\arabic{section}.\arabic{subsection}.\arabic{subsubsection}}, format = {\zihao{5}\songti}, nameformat = {}, aftername = {\quad}, titleformat = {}, beforeskip = {-.5em plus -.1em minus -.1em}, afterskip = {.5em plus .1em}, indent = {0pt}]{subsubsection}%
@@ -75,6 +76,7 @@
 % ----- Title Page
 \newcommand{\maketitlepage}{%
     \pagestyle{empty}
+    \begingroup
     \setlength{\parindent}{0pt}
     \hskip-1.2mm\begin{tikzpicture}
     \node at (0, 0) {\setlength{\fboxsep}{0pt}\makebox[0pt][l]{\parbox[t][0pt]{170mm}{\zihao{5}\bfseries ICS \useICS\\\usefenlei}}};
@@ -94,6 +96,7 @@
     \draw (0, 20mm) -- (170mm, 20mm);
     \node at (85mm, 0mm) {\makebox[0pt][c]{\parbox[b][0pt]{170mm}{\centerline{\zihao{4}{\CJKfontspec[AutoFakeBold]{SimSun}\bfseries\usedepartment}\hskip 5mm\heiti 发\hskip 3mm布}}}};
     \end{tikzpicture}
+    \endgroup
     \autoclearpage
     \setcounter{page}{1}
     \newgeometry{left = {25mm}, top = {30mm}, bottom = {24mm}, right = {20mm}, headsep = {5mm}, footskip = {4mm}}
@@ -131,22 +134,39 @@
 }
 
 % ----- Index and Bib
-\AtBeginDocument{\makeindex}
-\AtEndDocument{%
-    \backmatter
-    \nocite*{}
-    \bibliography{bibfile}
-    \printindex
+% \renewcommand{\imki@wrindexentrysplit}[3]{%
+% \expandafter\protected@write\csname#1@idxfile\endcsname{}%
+%     {\string\indexentry{#2}{\arabic{chapter}90\arabic{section}90\arabic{subsection}90\arabic{subsubsection}}}%
+% }
+\renewcommand{\imki@wrindexentrysplit}[3]{%
+\expandafter\protected@write\csname#1@idxfile\endcsname{}%
+    {\string\indexentry{#2}{\arabic{chapter}90\arabic{section}90\arabic{subsection}}}%
 }
+\patchcmd{\imki@makeindex}{\edef\imki@program{\imki@progdefault}}{\edef\imki@program{zhmakeindex}}{}{}
+\patchcmd{\imki@putindex}{\@input@}{%
+  \imki@exec{python adjustind.py \jobname}\@input@}{}{}
+
+\AtBeginDocument{\makeindex[options=-s gb-idxstyle.mst, columns = 1]}
+% \AtBeginDocument{\makeindex[options=-s gb-idxstyle.mst, columns = 1, intoc = true]}
+
 
 % ----- Back Cover
-\AtEndDocument{%
+\newcommand{\makecoverpage}{%
     \clearevenpage
     \newgeometry{scale = 1}
     \begin{tikzpicture}
         \node at (0, 0) {};
         \node at (\paperwidth - 5mm, -25mm) {\rotatebox[origin = br]{90}{\makebox[0pt][r]{\pbox{.5\textwidth}{\linespread{1}\selectfont\bfseries\usebiaozhunhao\\\phantom{\bfseries\usebiaozhunhao}}}}};
     \end{tikzpicture}
+}
+\AtEndDocument{%
+    \backmatter
+    \nocite*{}
+    \bibliography{bibfile}
+    \addcontentsline{toc}{chapter}{参考文献}
+    \printindex
+    \addcontentsline{toc}{chapter}{索引}
+    \makecoverpage
 }
 
 % ----- Style of Table of Contents
