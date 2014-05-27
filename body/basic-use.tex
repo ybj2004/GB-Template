@@ -1,0 +1,19 @@
+\chapter{模板的基本使用}
+「要求」中大多数细节都能通过 \LaTeX{} 比较舒服地实现，唯独「索引」\index{索引}部分是个老大难。好在经过一番实践，最终是将之搞定，不过也因此给模板的使用带来了一些问题——主要是需要进行一些安装和配置。
+
+除掉模板文件内包含的东西，还需要额外下载安装名为 Python\index{Python} 的脚本语言解释器。你可以在\href{https://www.python.org/ftp/python/2.7.6/}{\fbox{这里}}找到适用于全部平台的 Python。比如适用于 32 位 Windows 系统的版本是\href{https://www.python.org/ftp/python/2.7.6/python-2.7.6.msi}{\fbox{这个}}，而 64 位的 Windows 系统则应该安装\href{https://www.python.org/ftp/python/2.7.6/python-2.7.6.amd64.msi}{\fbox{这个}}。
+
+此外，为了让 \LaTeX{} 能够载入外部程序，在执行 \hologo{XeLaTeX} 的时候，还必须给它加上 \verb|--shell-escape| \index{-{}-shell-escape}选项，所以整个命令看起来像是下面这样：
+
+\begin{quote}
+\begin{verbatim}
+xelatex --shell-escape GB-template
+bibtex GB-template
+xelatex --shell-escape GB-template
+xelatex --shell-escape GB-template
+\end{verbatim}
+\end{quote}
+
+当然，这有点复杂了。所以我准备了名为 \verb|make.bat| 的批处理文件，自动做这些工作。你只需要在编写好 \LaTeX{} 文档之后，双击运行这个文件就会生成 PDF 了。
+
+最后，为了保证文章内没有乱码，所有的文件必须使用 UTF-8 编码\index{编码}来保存。这一点尤为重要，但却不是我所能控制的了，因为这是「用户」使用时候应当注意的问题。

@@ -1,7 +1,7 @@
 %!TEX program = xelatex
 \documentclass{GB-template}
 
-% use parameter
+% use parameters
 \ICS{这里输入 ICS 号}
 \fenlei{这里输入分类号}
 \biaozhunhao{在这里输入标准号}
@@ -14,64 +14,14 @@
 \shishidate{XXXX-XX-XX}
 
 \begin{document}
-\bibliographystyle{gbt7714-2005}
-\frontmatter
-\renewcommand{\thepage}{\Roman{page}}
-% titlepage
-\maketitlepage
-\patchchapter
-\tableofcontents\listoffigures\listoftables
-\restorechapter
-\begin{preamble}{前言}
-    前言和序言有什么差别呢？前言和序言有什么差别呢？前言和序言有什么差别呢？前言和序言有什么差别呢？前言和序言有什么差别呢？
-\end{preamble}
-\begin{preamble}{序言}
-    前言和序言有什么差别呢？前言和序言有什么差别呢？前言和序言有什么差别呢？前言和序言有什么差别呢？前言和序言有什么差别呢？
-\end{preamble}
+% preamble.tex 里面是前言部分。
+\input{preamble.tex}
+% mainmatter 是「正文」的意思。
+% 从这里开始都是正文。
 \mainmatter
-\chapter{模板的基本使用}
-「要求」中大多数细节都能通过 \LaTeX{} 比较舒服地实现，唯独「索引」\index{索引}部分是个老大难。好在经过一番实践，最终是将之搞定，不过也因此给模板的使用带来了一些问题——主要是需要进行一些安装和配置。
-
-除掉模板文件内包含的东西，还需要额外下载安装名为 Python\index{Python} 的脚本语言解释器。你可以在\href{https://www.python.org/ftp/python/2.7.6/}{\fbox{这里}}找到适用于全部平台的 Python。比如适用于 32 位 Windows 系统的版本是\href{https://www.python.org/ftp/python/2.7.6/python-2.7.6.msi}{\fbox{这个}}，而 64 位的 Windows 系统则应该安装\href{https://www.python.org/ftp/python/2.7.6/python-2.7.6.amd64.msi}{\fbox{这个}}。
-
-此外，为了让 \LaTeX{} 能够载入外部程序，在执行 \hologo{XeLaTeX} 的时候，还必须给它加上 \verb|--shell-escape| \index{-{}-shell-escape}选项，所以整个命令看起来像是下面这样：
-
-\begin{quote}
-\begin{verbatim}
-xelatex --shell-escape GB-template
-bibtex GB-template
-xelatex --shell-escape GB-template
-xelatex --shell-escape GB-template
-\end{verbatim}
-\end{quote}
-
-当然，这有点复杂了。所以我准备了名为 \verb|make.bat| 的批处理文件，自动做这些工作。你只需要在编写好 \LaTeX{} 文档之后，双击运行这个文件就会生成 PDF 了。
-
-最后，为了保证文章内没有乱码，所有的文件必须使用 UTF-8 编码\index{编码}来保存。这一点尤为重要，但却不是我所能控制的了，因为这是「用户」使用时候应当注意的问题。
-
-\chapter{章、条的}
-\section{编号和标题}
-\subsection{用五号黑体}
-\subsubsection{标注条文、列项及其编号用五号宋体}
-\begin{figure}[htb]
-\centering
-\rule{4cm}{3cm}
-\caption{图表的标题用 5 号黑体字}\label{fig:dummyfigure}
-\end{figure}
-
-让我们看看脚注的样子\footnote{脚注的标号应该是小五号宋体。如果脚注特别长的话，换行应该对齐。如果脚注特别长的话，换行应该对齐。如果脚注特别长的话，换行应该对齐。如果脚注特别长的话，换行应该对齐。如果脚注特别长的话，换行应该对齐\index{对齐}。如果脚注特别长的话，换行应该对齐。如果脚注特别长的话，换行应该对齐。}。
-
-哦，让我们再来说一说序言的故事。这其实是为了测试索引\index{索引}的效果。
-
-\chapter{这里}
-\section{用来}
-\subsection{测试}
-\subsubsection{的效果}
-这里用来测试索引\index{索引}的效果\index{效果}。
-\subsection{再来一个小结}
-再来一个索引\index{索引}。
-\appendix
-\autoclearpage
-\gchapter{规范型附录标题}
-\zchapter{资料性附录标题}
+\input{basic-use.tex}
+\input{test.tex}
+% appendix 开始是「附件」
+\appendix\autoclearpage
+\input{appendix.tex}
 \end{document}

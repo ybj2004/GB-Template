@@ -146,7 +146,16 @@
 \patchcmd{\imki@putindex}{\@input@}{%
   \imki@exec{python adjustind.py \jobname}\@input@}{}{}
 
-\AtBeginDocument{\makeindex[options=-s gb-idxstyle.mst, columns = 1]}
+\AtBeginDocument{%
+    \makeindex[options=-s gb-idxstyle.mst, columns = 1]%
+    \bibliographystyle{gbt7714-2005}%
+    \frontmatter%
+    \renewcommand{\thepage}{\Roman{page}}%
+    \maketitlepage%
+    \patchchapter%
+    \tableofcontents\listoffigures\listoftables%
+    \restorechapter%
+}
 % \AtBeginDocument{\makeindex[options=-s gb-idxstyle.mst, columns = 1, intoc = true]}
 
 
@@ -183,3 +192,11 @@
 
 % ----- Logo
 \newcommand*{\BibTeX}{\hologo{BibTeX}}
+
+% ----- Paths
+\graphicspath{{./figures/}}
+\providecommand*\input@path{}
+\newcommand\addinputpath[1]{
+  \expandafter\def\expandafter\input@path
+  \expandafter{\input@path{#1}}}
+\addinputpath{body/}
