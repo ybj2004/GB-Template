@@ -1,9 +1,9 @@
 %!TEX root = GB-template.tex
-\NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\ProvidesClass{GB-template}[2014/05/24 v1.0 GB-template document class]
+\NeedsTeXFormat{LaTeX2e}[2020/10/01]
+\ProvidesClass{GB-template}[2026/11/03 v2.0.0 GB-template document class]
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{ctexbook}}
 \ProcessOptions
-\LoadClass[UTF8, fancyhdr, hyperref]{ctexbook}[2009/09/13]
+\LoadClass[UTF8]{ctexbook}[2020/01/01]
 
 % ----- Loading packages
 \RequirePackage{geometry}
@@ -13,12 +13,12 @@
 \RequirePackage{calc}
 \RequirePackage{etoolbox}
 \RequirePackage{caption}
-\RequirePackage{chngcntr}
 \RequirePackage{titlesec}
 \RequirePackage{titletoc}
 \RequirePackage{hologo}
-\RequirePackage{letltxmacro}
 \RequirePackage[xindy]{imakeidx}
+\RequirePackage{fancyhdr}
+\RequirePackage{hyperref}
 
 % ----- Paper Layout
 \geometry{papersize = {210mm, 297mm}}
@@ -33,8 +33,18 @@
 \patchcmd{\chapter}{\thispagestyle{plain}}{\thispagestyle{fancy}}{}{}
 
 % Sectioning
-\CTEXsetup[titleformat = {\zihao{3}\heiti}, beforeskip = {8mm}, afterskip = {10mm}]{chapter}
-\CTEXoptions[contentsname = {目\qquad{}次}, bibname = {参~考~文~献}, indexname = {索\qquad\quad{}引}]
+\ctexset{
+    chapter = {
+        format = {\centering},
+        nameformat = {\zihao{3}\heiti},
+        titleformat = {\zihao{3}\heiti},
+        beforeskip = {8mm},
+        afterskip = {10mm}
+    },
+    contentsname = {目\qquad{}次},
+    bibname = {参~考~文~献},
+    indexname = {索\qquad\quad{}引}
+}
 \patchcmd{\listoffigures}{\chapter *{\listfigurename }\@mkboth {\MakeUppercase \listfigurename }{\MakeUppercase \listfigurename }}{\vskip 1.2ex}{}{}
 \patchcmd{\listoftables}{\chapter *{\listtablename }\@mkboth {\MakeUppercase \listtablename }{\MakeUppercase \listtablename }}{\vskip 1.2ex}{}{}
 \newcommand{\patchchapter}{%
@@ -52,34 +62,84 @@
 \let\LiamOldMainmatter\mainmatter
 \renewcommand{\mainmatter}{\LiamOldMainmatter%
     \chapter*{\usename}%
-    \CTEXsetup[name = {,}, number = {\arabic{chapter}}, format = {\zihao{5}\heiti}, nameformat = {}, aftername = {\quad}, titleformat = {}, beforeskip = {0ex}, afterskip = {2.3ex plus .2ex}, indent = {0pt}]{chapter}%
-    \CTEXsetup[name = {,}, number = {\arabic{chapter}.\arabic{section}}, format = {\zihao{5}\heiti}, nameformat = {}, aftername = {\quad}, titleformat = {}, beforeskip = {-.5em plus -.1em minus -.1em}, afterskip = {.5em plus .1em}, indent = {0pt}]{section}%
-    \CTEXsetup[name = {,}, number = {\arabic{chapter}.\arabic{section}.\arabic{subsection}}, format = {\zihao{5}\heiti}, nameformat = {}, aftername = {\quad}, titleformat = {}, beforeskip = {-.5em plus -.1em minus -.1em}, afterskip = {.5em plus .1em}, indent = {0pt}]{subsection}%
-    \CTEXsetup[name = {,}, number = {\arabic{chapter}.\arabic{section}.\arabic{subsection}.\arabic{subsubsection}}, format = {\zihao{5}\songti}, nameformat = {}, aftername = {\quad}, titleformat = {}, beforeskip = {-.5em plus -.1em minus -.1em}, afterskip = {.5em plus .1em}, indent = {0pt}]{subsubsection}%
+    \ctexset{
+        chapter = {
+            name = {,},
+            number = {\arabic{chapter}},
+            format = {\zihao{5}\heiti},
+            nameformat = {},
+            aftername = {\quad},
+            titleformat = {},
+            beforeskip = {0ex},
+            afterskip = {2.3ex plus .2ex},
+            indent = {0pt}
+        },
+        section = {
+            name = {,},
+            number = {\arabic{chapter}.\arabic{section}},
+            format = {\zihao{5}\heiti},
+            nameformat = {},
+            aftername = {\quad},
+            titleformat = {},
+            beforeskip = {-.5em plus -.1em minus -.1em},
+            afterskip = {.5em plus .1em},
+            indent = {0pt}
+        },
+        subsection = {
+            name = {,},
+            number = {\arabic{chapter}.\arabic{section}.\arabic{subsection}},
+            format = {\zihao{5}\heiti},
+            nameformat = {},
+            aftername = {\quad},
+            titleformat = {},
+            beforeskip = {-.5em plus -.1em minus -.1em},
+            afterskip = {.5em plus .1em},
+            indent = {0pt}
+        },
+        subsubsection = {
+            name = {,},
+            number = {\arabic{chapter}.\arabic{section}.\arabic{subsection}.\arabic{subsubsection}},
+            format = {\zihao{5}\songti},
+            nameformat = {},
+            aftername = {\quad},
+            titleformat = {},
+            beforeskip = {-.5em plus -.1em minus -.1em},
+            afterskip = {.5em plus .1em},
+            indent = {0pt}
+        }
+    }
     \setcounter{secnumdepth}{3}
     \patchchapter
 }
 \let\LiamOldAppendix\appendix
 \renewcommand{\appendix}{%
     \LiamOldAppendix%
+    \counterwithin{figure}{chapter}
+    \counterwithin{table}{chapter}
     \appendixsectioning
     \restorechapter
     \titlecontents{chapter}[3.0em]{}{\contentslabel{3.0em}}{\hspace*{-3.0em}}{\titlerule*[.7pc]{$\cdot$}\contentspage}
 }
 \newcommand{\appendixsectioning}{%
-    % \CTEXsetup[format = {\centering}]{chapter}
-    \CTEXsetup[format = {\centering}, nameformat = {\zihao{5}\heiti}, titleformat = {\zihao{5}\heiti}, beforeskip = {9mm}, afterskip = {10mm}, aftername = {\endgraf}]{chapter}%
+    \ctexset{chapter = {
+        format = {\centering},
+        nameformat = {\zihao{5}\heiti},
+        titleformat = {\zihao{5}\heiti},
+        beforeskip = {9mm},
+        afterskip = {10mm},
+        aftername = {\endgraf}
+    }}
 }
-\newcommand{\gchapter}[1]{\chapter[（规范性附录）#1]{（规范性附录）\\#1}}
-\newcommand{\zchapter}[1]{\chapter[（资料性附录）#1]{（资料性附录）\\#1}}
+\newcommand{\gchapter}[1]{\chapter[（规范性）#1]{（规范性）\\#1}}
+\newcommand{\zchapter}[1]{\chapter[（资料性）#1]{（资料性）\\#1}}
 
 % ----- Title Page
 \newcommand{\maketitlepage}{%
     \pagestyle{empty}
     \begingroup
     \setlength{\parindent}{0pt}
-    \hskip-1.2mm\begin{tikzpicture}
-    \node at (0, 0) {\setlength{\fboxsep}{0pt}\makebox[0pt][l]{\parbox[t][0pt]{170mm}{\zihao{5}\bfseries ICS \useICS\\\usefenlei}}};
+    \begin{tikzpicture}
+    \node at (0, 0) {\setlength{\fboxsep}{0pt}\makebox[0pt][l]{\parbox[t][0pt]{170mm}{\zihao{5}\heiti ICS \useICS\\CCS \useCCS}}};
     \node at (85mm, -36mm) {\resizebox{170mm}{8mm}{\titlefont\bfseries\zihao{2}中~华~人~民~共~和~国~国~家~标~准}};
     % \draw[fill] (119mm, -23mm) rectangle (159mm, -3mm);
     \node at (139mm, -13mm) {\includegraphics[width = 40mm, height = 20mm]{GB-LOGO.jpg}};
@@ -108,7 +168,8 @@
 
 % ----- Parameters
 \newcommand*{\ICS}[1]{\newcommand*{\useICS}{#1}}
-\newcommand*{\fenlei}[1]{\newcommand*{\usefenlei}{#1}}
+\newcommand*{\CCS}[1]{\newcommand*{\useCCS}{#1}}
+\newcommand*{\fenlei}[1]{\CCS{#1}}
 \newcommand*{\biaozhunhao}[1]{\newcommand*{\usebiaozhunhao}{#1}}
 \newcommand*{\daitibiaozhunhao}[1]{\newcommand*{\usedaitibiaozhunhao}{#1}}
 \newcommand*{\name}[1]{\newcommand*{\usename}{#1}}
@@ -119,13 +180,12 @@
 \newcommand*{\shishidate}[1]{\newcommand*{\useshishidate}{#1}}
 
 % ----- Caption Style of Figure and Table
-\counterwithin{figure}{chapter}
-\counterwithin{table}{chapter}
-\renewcommand{\thefigure}{图~\thechapter.\arabic{figure}}
-\renewcommand{\thetable}{图~\thechapter.\arabic{table}}
-\renewcommand{\figurename}{\relax}
-\renewcommand{\tablename}{\relax}
-\captionsetup{font = {bf}}
+\renewcommand{\thefigure}{\arabic{figure}}
+\renewcommand{\thetable}{\arabic{table}}
+\renewcommand{\figurename}{图}
+\renewcommand{\tablename}{表}
+\DeclareCaptionFont{heiti}{\heiti}
+\captionsetup{font = {heiti}, labelsep = {quad}}
 
 % ----- Footnote Style
 \renewcommand\@makefntext[1]{%
@@ -179,7 +239,7 @@
 
 % ----- Style of Table of Contents
 \hypersetup{hidelinks}
-\contentsmargin{1em}
+\contentsmargin{2em}
 \titlecontents{chapter}[1.2em]{}{\contentslabel{1.2em}}{\hspace*{-1.2em}}{\titlerule*[.7pc]{$\cdot$}\contentspage}
 \titlecontents{section}[3.8em]{}{\contentslabel{2.3em}}{\hspace*{-2.3em}}{\titlerule*[.7pc]{$\cdot$}\contentspage}
 \titlecontents{subsection}[6.1em]{}{\contentslabel{3.2em}}{\hspace*{-3.2em}}{\titlerule*[.7pc]{$\cdot$}\contentspage}
@@ -187,7 +247,7 @@
 \titlecontents{table}[3.0em]{}{\contentslabel{3.0em}}{\hspace*{-3.0em}}{\titlerule*[.7pc]{$\cdot$}\contentspage}
 
 % ----- Title Font
-\newcommand*{\titlefont}{\CJKfontspec{SimSun}}
+\newcommand*{\titlefont}{\CJKfontspec[AutoFakeBold]{SimSun}}
 
 % ----- Logo
 \newcommand*{\BibTeX}{\hologo{BibTeX}}

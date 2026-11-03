@@ -1,19 +1,18 @@
-\chapter{模板的基本使用}
-「要求」中大多数细节都能通过 \LaTeX{} 比较舒服地实现，唯独「索引」\index{索引}部分是个老大难。好在经过一番实践，最终是将之搞定，不过也因此给模板的使用带来了一些问题——主要是需要进行一些安装和配置。
+\chapter{范围}
+本文件给出标准化文件的常用结构、层次和要素编排示例，适用于使用本模板起草标准化文件。\index{范围}
 
-除掉模板文件内包含的东西，还需要额外下载安装名为 Python\index{Python} 的脚本语言解释器。你可以在\href{https://www.python.org/ftp/python/2.7.6/}{\fbox{这里}}找到适用于全部平台的 Python。比如适用于 32 位 Windows 系统的版本是\href{https://www.python.org/ftp/python/2.7.6/python-2.7.6.msi}{\fbox{这个}}，而 64 位的 Windows 系统则应该安装\href{https://www.python.org/ftp/python/2.7.6/python-2.7.6.amd64.msi}{\fbox{这个}}。
+\chapter{规范性引用文件}
+下列文件中的内容通过文中的规范性引用而构成本文件必不可少的条款。其中，注日期的引用文件，仅该日期对应的版本适用于本文件；不注日期的引用文件，其最新版本（包括所有的修改单）适用于本文件。\index{规范性引用文件}
 
-此外，为了让 \LaTeX{} 能够载入外部程序，在执行 \hologo{XeLaTeX} 的时候，还必须给它加上 \verb|--shell-escape| \index{-{}-shell-escape}选项，所以整个命令看起来像是下面这样：
+GB/T 1.1—2020 标准化工作导则 第1部分：标准化文件的结构和起草规则
 
-\begin{quote}
-\begin{verbatim}
-xelatex --shell-escape GB-template
-bibtex GB-template
-xelatex --shell-escape GB-template
-xelatex --shell-escape GB-template
-\end{verbatim}
-\end{quote}
+GB/T 7714—2025 信息与文献 参考文献著录规则
 
-当然，这有点复杂了。所以我准备了名为 \verb|make.bat| 的批处理文件，自动做这些工作。你只需要在编写好 \LaTeX{} 文档之后，双击运行这个文件就会生成 PDF 了。
+\chapter{术语和定义}
+GB/T 20000.1 界定的以及下列术语和定义适用于本文件。\index{术语和定义}
 
-最后，为了保证文章内没有乱码，所有的文件必须使用 UTF-8 编码\index{编码}来保存。这一点尤为重要，但却不是我所能控制的了，因为这是「用户」使用时候应当注意的问题。
+\section{标准化文件}
+通过标准化活动制定的文件。
+
+\section{标准}
+通过标准化活动，按照规定的程序经协商一致制定，为各种活动或其结果提供规则、指南或特性，供共同使用和重复使用的文件。

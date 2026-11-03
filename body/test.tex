@@ -1,21 +1,37 @@
-\chapter{章、条的}
-\section{编号和标题}
-\subsection{用五号黑体}
-\subsubsection{标注条文、列项及其编号用五号宋体}
+\chapter{编排示例}
+\section{层次}
+\subsection{条的编号}
+\subsubsection{条标题}
+章、条及其编号和标题使用五号黑体，条文使用五号宋体。\index{层次}
+
+\section{图和表}
+图编号从引言开始一直连续到附录之前，图题位于图下方。\index{图}
+
 \begin{figure}[htb]
-\centering
-\rule{4cm}{3cm}
-\caption{图表的标题用 5 号黑体字}\label{fig:dummyfigure}
+    \centering
+    \rule{4cm}{3cm}
+    \caption{图题示例}
+    \label{fig:example}
 \end{figure}
 
-让我们看看脚注的样子\footnote{脚注的标号应该是小五号宋体。如果脚注特别长的话，换行应该对齐。如果脚注特别长的话，换行应该对齐。如果脚注特别长的话，换行应该对齐。如果脚注特别长的话，换行应该对齐。如果脚注特别长的话，换行应该对齐\index{对齐}。如果脚注特别长的话，换行应该对齐。如果脚注特别长的话，换行应该对齐。}。
+表编号采用与图相同的连续编号方式，表题位于表上方。图~\ref{fig:example} 和表~\ref{tab:example} 用于验证交叉引用。\index{表}
 
-哦，让我们再来说一说序言的故事。这其实是为了测试索引\index{索引}的效果。
+\begin{table}[htb]
+    \centering
+    \caption{表题示例}
+    \label{tab:example}
+    \begin{tabular}{|c|c|}
+        \hline
+        项目 & 内容 \\
+        \hline
+        示例甲 & 内容甲 \\
+        示例乙 & 内容乙 \\
+        \hline
+    \end{tabular}
+\end{table}
 
-\chapter{这里}
-\section{用来}
-\subsection{测试}
-\subsubsection{的效果}
-这里用来测试索引\index{索引}的效果\index{效果}。
-\subsection{再来一个小结}
-再来一个索引\index{索引}。
+\section{注和索引}
+脚注内容使用小五号宋体，并保持适当的页脚间距\footnote{这是一个用于验证脚注格式和页码位置的示例。}。索引用于指明文件中重要词语及其对应的位置。\index{索引}
+
+\section{示例}
+示例内容用于帮助理解文件条款，正式使用时应替换为与文件主题相关的技术内容。

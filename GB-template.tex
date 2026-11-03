@@ -3,7 +3,7 @@
 
 % use parameters
 \ICS{这里输入 ICS 号}
-\fenlei{这里输入分类号}
+\CCS{这里输入 CCS 号}
 \biaozhunhao{在这里输入标准号}
 \daitibiaozhunhao{在这里输入代替标准号}
 \name{标准名称}
@@ -14,14 +14,13 @@
 \shishidate{XXXX-XX-XX}
 
 \begin{document}
-% preamble.tex 里面是前言部分。
+% 前言和引言。
 \input{preamble.tex}
-% mainmatter 是「正文」的意思。
-% 从这里开始都是正文。
+% 正文。
 \mainmatter
 \input{basic-use.tex}
 \input{test.tex}
-% appendix 开始是「附件」
+% 附录。
 \appendix\autoclearpage
 \input{appendix.tex}
 \end{document}
