@@ -10,6 +10,10 @@ where zhmakeindex >nul 2>nul || (
     echo zhmakeindex was not found. Add it to PATH.
     exit /b 1
 )
+where biber >nul 2>nul || (
+    echo Biber was not found. Install biblatex and add Biber to PATH.
+    exit /b 1
+)
 where python >nul 2>nul || (
     echo Python 3 was not found. Add it to PATH.
     exit /b 1

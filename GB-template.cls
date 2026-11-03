@@ -21,6 +21,7 @@
 \RequirePackage{fancyhdr}
 \RequirePackage{hyperref}
 \addbibresource{bibfile.bib}
+\indexsetup{firstpagestyle = fancy}
 
 \renewbibmacro*{title+issuetitle}{%
     \usebibmacro{periodical}%
@@ -64,11 +65,12 @@
 \fancyhead[LE,RO]{\zihao{5}\heiti\usebiaozhunhao}
 \fancyfoot[LE]{\makebox[4mm][r]{\makebox[0pt][l]{\zihao{-5}\songti\thepage}}}
 \fancyfoot[RO]{\makebox[4mm][l]{\makebox[0pt][r]{\zihao{-5}\songti\thepage}}}
-\patchcmd{\chapter}{\thispagestyle{plain}}{\thispagestyle{fancy}}{}{}
+
 
 % Sectioning
 \ctexset{
     chapter = {
+        pagestyle = {fancy},
         format = {\centering},
         nameformat = {\zihao{3}\heiti},
         titleformat = {\zihao{3}\heiti},
@@ -81,16 +83,6 @@
 }
 \patchcmd{\listoffigures}{\chapter *{\listfigurename }\@mkboth {\MakeUppercase \listfigurename }{\MakeUppercase \listfigurename }}{\vskip 1.2ex}{}{}
 \patchcmd{\listoftables}{\chapter *{\listtablename }\@mkboth {\MakeUppercase \listtablename }{\MakeUppercase \listtablename }}{\vskip 1.2ex}{}{}
-\newcommand{\patchchapter}{%
-    \patchcmd{\caption@chapter@ORI}%
-        {\if@openright\cleardoublepage\else\clearpage\fi}%
-        {\relax\relax}{}{}%
-}
-\newcommand{\restorechapter}{%
-    \patchcmd{\caption@chapter@ORI}{\relax\relax}%
-        {\if@openright\cleardoublepage\else\clearpage\fi}%
-        {}{}%
-}
 \newcommand*{\autoclearpage}{\if@openright\cleardoublepage\else\clearpage\fi}
 \newcommand*{\clearevenpage}{\clearpage \if@twoside \ifodd\c@page \hbox{}\newpage \if@twocolumn \hbox{}\newpage \fi \fi \fi}
 \let\LiamOldMainmatter\mainmatter
@@ -98,6 +90,7 @@
     \chapter*{\usename}%
     \ctexset{
         chapter = {
+            break = {\par},
             name = {,},
             number = {\arabic{chapter}},
             format = {\zihao{5}\heiti},
@@ -143,19 +136,21 @@
         }
     }
     \setcounter{secnumdepth}{3}
-    \patchchapter
 }
 \let\LiamOldAppendix\appendix
 \renewcommand{\appendix}{%
     \LiamOldAppendix%
     \counterwithin{figure}{chapter}
     \counterwithin{table}{chapter}
+    \renewcommand{\thefigure}{图~\thechapter.\arabic{figure}}
+    \renewcommand{\thetable}{表~\thechapter.\arabic{table}}
     \appendixsectioning
-    \restorechapter
-    \titlecontents{chapter}[3.0em]{}{\contentslabel{3.0em}}{\hspace*{-3.0em}}{\titlerule*[.7pc]{$\cdot$}\contentspage}
+    \titlecontents{chapter}[4.5em]{}{\contentslabel{4.5em}}{\hspace*{-4.5em}}{\titlerule*[.7pc]{$\cdot$}\contentspage}
 }
 \newcommand{\appendixsectioning}{%
     \ctexset{chapter = {
+        break = {\if@openright\cleardoublepage\else\clearpage\fi},
+        name = {附\quad 录,},
         format = {\centering},
         nameformat = {\zihao{5}\heiti},
         titleformat = {\zihao{5}\heiti},
@@ -214,10 +209,10 @@
 \newcommand*{\shishidate}[1]{\newcommand*{\useshishidate}{#1}}
 
 % ----- Caption Style of Figure and Table
-\renewcommand{\thefigure}{\arabic{figure}}
-\renewcommand{\thetable}{\arabic{table}}
-\renewcommand{\figurename}{图}
-\renewcommand{\tablename}{表}
+\renewcommand{\thefigure}{图~\arabic{figure}}
+\renewcommand{\thetable}{表~\arabic{table}}
+\renewcommand{\figurename}{\relax}
+\renewcommand{\tablename}{\relax}
 \DeclareCaptionFont{heiti}{\heiti}
 \captionsetup{font = {heiti}, labelsep = {quad}}
 
@@ -228,9 +223,14 @@
 }
 
 % ----- Index and Bib
+\newcommand*{\GBindexlocation}{%
+    \arabic{chapter}%
+    \ifnum\arabic{section}>0 90\arabic{section}\fi
+    \ifnum\arabic{subsection}>0 90\arabic{subsection}\fi
+}
 \renewcommand{\imki@wrindexentrysplit}[3]{%
 \expandafter\protected@write\csname#1@idxfile\endcsname{}%
-    {\string\indexentry{#2}{\arabic{chapter}90\arabic{section}90\arabic{subsection}}}%
+    {\string\indexentry{#2}{\GBindexlocation}}%
 }
 
 \AtBeginDocument{%
@@ -238,9 +238,7 @@
     \frontmatter%
     \renewcommand{\thepage}{\Roman{page}}%
     \maketitlepage%
-    \patchchapter%
     \tableofcontents\listoffigures\listoftables%
-    \restorechapter%
 }
 
 
@@ -254,11 +252,10 @@
 }
 \AtEndDocument{%
     \backmatter
-    \nocite{*}
-    \printbibliography
     \addcontentsline{toc}{chapter}{参考文献}
-    \printindex
+    \printbibliography
     \addcontentsline{toc}{chapter}{索引}
+    \printindex
     \makecoverpage
 }
 
