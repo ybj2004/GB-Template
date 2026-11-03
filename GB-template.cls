@@ -17,8 +17,42 @@
 \RequirePackage{titletoc}
 \RequirePackage{hologo}
 \RequirePackage[noautomatic]{imakeidx}
+\RequirePackage[backend = biber, style = gb7714-2025]{biblatex}
 \RequirePackage{fancyhdr}
 \RequirePackage{hyperref}
+\addbibresource{bibfile.bib}
+
+\renewbibmacro*{title+issuetitle}{%
+    \usebibmacro{periodical}%
+    \newunit
+    \iffieldundef{series}{}{\newunit\printfield{series}}%
+    \usebibmacro{periodical+issue}%
+    \iffieldundef{number}{}{\multinumberparser{\thefield{number}}}%
+    \iffieldundef{volume}
+        {\printfield{year}%
+            \iffieldundef{number}{}{\printtext{\mkbibparens{\multinumberfirst}}}%
+            \bibrangedash
+            \iffieldundef{endyear}{}{%
+                \printfield{endyear}%
+                \iffieldundef{number}{}{\printtext{\mkbibparens{\multinumbersecond}}}%
+            }%
+        }
+        {\multivolparser{\thefield{volume}}%
+            \printfield{year}%
+            \setunit{\periodicaldatevoldelim}%
+            \printtext{\multivolfirst}%
+            \iffieldundef{number}{}{\printtext{\mkbibparens{\multinumberfirst}}}%
+            \bibrangedash
+            \iffieldundef{endyear}{}{%
+                \printfield{endyear}%
+                \setunit{\periodicaldatevoldelim}%
+                \printtext{\multivolsecond}%
+                \iffieldundef{number}{}{\printtext{\mkbibparens{\multinumbersecond}}}%
+            }%
+        }%
+    \usebibmacro{issue}%
+    \newunit
+}
 
 % ----- Paper Layout
 \geometry{papersize = {210mm, 297mm}}
@@ -201,7 +235,6 @@
 
 \AtBeginDocument{%
     \makeindex[options=-s gb-idxstyle.mst, columns = 1]%
-    \bibliographystyle{gbt7714-2005}%
     \frontmatter%
     \renewcommand{\thepage}{\Roman{page}}%
     \maketitlepage%
@@ -209,7 +242,6 @@
     \tableofcontents\listoffigures\listoftables%
     \restorechapter%
 }
-% \AtBeginDocument{\makeindex[options=-s gb-idxstyle.mst, columns = 1, intoc = true]}
 
 
 % ----- Back Cover
@@ -222,8 +254,8 @@
 }
 \AtEndDocument{%
     \backmatter
-    \nocite*{}
-    \bibliography{bibfile}
+    \nocite{*}
+    \printbibliography
     \addcontentsline{toc}{chapter}{参考文献}
     \printindex
     \addcontentsline{toc}{chapter}{索引}
