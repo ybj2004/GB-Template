@@ -1,0 +1,5 @@
+{
+    "latex-workshop.latex.recipe.default": "first",
+    "latex-workshop.latex.build.enableMagicComments": false,
+    "latex-workshop.latex.autoBuild.run": "onSave"
+}
