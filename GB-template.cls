@@ -16,7 +16,7 @@
 \RequirePackage{titlesec}
 \RequirePackage{titletoc}
 \RequirePackage{hologo}
-\RequirePackage[xindy]{imakeidx}
+\RequirePackage[noautomatic]{imakeidx}
 \RequirePackage{fancyhdr}
 \RequirePackage{hyperref}
 
@@ -194,17 +194,10 @@
 }
 
 % ----- Index and Bib
-% \renewcommand{\imki@wrindexentrysplit}[3]{%
-% \expandafter\protected@write\csname#1@idxfile\endcsname{}%
-%     {\string\indexentry{#2}{\arabic{chapter}90\arabic{section}90\arabic{subsection}90\arabic{subsubsection}}}%
-% }
 \renewcommand{\imki@wrindexentrysplit}[3]{%
 \expandafter\protected@write\csname#1@idxfile\endcsname{}%
     {\string\indexentry{#2}{\arabic{chapter}90\arabic{section}90\arabic{subsection}}}%
 }
-\patchcmd{\imki@makeindex}{\edef\imki@program{\imki@progdefault}}{\edef\imki@program{zhmakeindex}}{}{}
-\patchcmd{\imki@putindex}{\@input@}{%
-  \imki@exec{python adjustind.py \jobname}\@input@}{}{}
 
 \AtBeginDocument{%
     \makeindex[options=-s gb-idxstyle.mst, columns = 1]%

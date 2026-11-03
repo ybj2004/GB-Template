@@ -1,4 +1,25 @@
 {
+    "latex-workshop.latex.tools": [
+        {
+            "name": "latexmk-xelatex",
+            "command": "latexmk",
+            "args": [
+                "-xelatex",
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "%DOC%"
+            ]
+        }
+    ],
+    "latex-workshop.latex.recipes": [
+        {
+            "name": "XeLaTeX (latexmk)",
+            "tools": [
+                "latexmk-xelatex"
+            ]
+        }
+    ],
     "latex-workshop.latex.recipe.default": "first",
     "latex-workshop.latex.build.enableMagicComments": false,
     "latex-workshop.latex.autoBuild.run": "onSave"
