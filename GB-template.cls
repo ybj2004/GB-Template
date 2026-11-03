@@ -22,7 +22,7 @@
 
 % ----- Paper Layout
 \geometry{papersize = {210mm, 297mm}}
-\geometry{left = {25mm}, top = {10mm}, bottom = {20mm}, right = {15mm}}
+\geometry{left = {25mm}, top = {10mm}, bottom = {20mm}, right = {15mm}, headheight = {13pt}, footskip = {8mm}}
 
 % ----- Header and Footer
 \fancyhf{}
@@ -99,7 +99,7 @@
     \endgroup
     \autoclearpage
     \setcounter{page}{1}
-    \newgeometry{left = {25mm}, top = {30mm}, bottom = {24mm}, right = {20mm}, headsep = {5mm}, footskip = {4mm}}
+    \newgeometry{left = {25mm}, top = {30mm}, bottom = {24mm}, right = {20mm}, headsep = {5mm}, headheight = {13pt}, footskip = {8mm}}
     \pagestyle{fancy}
 }
 
@@ -163,9 +163,8 @@
 \newcommand{\makecoverpage}{%
     \clearevenpage
     \newgeometry{scale = 1}
-    \begin{tikzpicture}
-        \node at (0, 0) {};
-        \node at (\paperwidth - 5mm, -25mm) {\rotatebox[origin = br]{90}{\makebox[0pt][r]{\pbox{.5\textwidth}{\linespread{1}\selectfont\bfseries\usebiaozhunhao\\\phantom{\bfseries\usebiaozhunhao}}}}};
+    \begin{tikzpicture}[remember picture, overlay]
+        \node[rotate = 90, anchor = north, inner sep = 0] at ([xshift = -5mm, yshift = -25mm]current page.north east) {\pbox{.5\textwidth}{\linespread{1}\selectfont\bfseries\usebiaozhunhao\\\phantom{\bfseries\usebiaozhunhao}}};
     \end{tikzpicture}
 }
 \AtEndDocument{%
