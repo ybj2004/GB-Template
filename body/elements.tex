@@ -38,10 +38,10 @@
 \begin{table}[htb]
     \caption{多列数字表题示例}
     \label{tab:example}
-    \stdunits{单位为毫米}
     \centering\zihao{-5}\songti
     \setlength{\arrayrulewidth}{1pt}
     \begin{tabular}{!{\vrule width 1pt}p{22mm}|r|r|p{28mm}!{\vrule width 1pt}}
+        \multicolumn{4}{r}{单位为毫米}\\
         \hline
         项目 & 数值甲 & 数值乙 & 备注 \\
         \hline
@@ -58,6 +58,7 @@
     \end{tabular}
 \end{table}
 
+\clearpage
 \subsection{表的转页接排}
 续表重复表编号、单位陈述和表头，并标明“续”；每页均保留表底框线。\index{续表}
 {\zihao{-5}\songti

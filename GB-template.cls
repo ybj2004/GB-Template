@@ -250,7 +250,7 @@
     topsep = 0pt
 }
 \setlist[stdlist,1]{label = {——}, labelindent = 2\ccwd, leftmargin = 5\ccwd}
-\setlist[stdlist,2]{label = {\textperiodcentered}, labelindent = -1\ccwd, leftmargin = 2\ccwd}
+\setlist[stdlist,2]{label = {\(\cdot\)}, labelindent = -1\ccwd, leftmargin = 2\ccwd}
 \newlist{stdenum}{enumerate}{2}
 \setlist[stdenum]{
     align = left,
