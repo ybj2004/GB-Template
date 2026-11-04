@@ -10,6 +10,7 @@
 \RequirePackage{pbox}
 \RequirePackage{tikz}
 \RequirePackage{graphicx}
+\RequirePackage{lmodern}
 \RequirePackage{calc}
 \RequirePackage{etoolbox}
 \RequirePackage{caption}
@@ -138,6 +139,12 @@
             indent = {0pt}
         }
     }
+    \counterwithout{figure}{chapter}
+    \counterwithout{table}{chapter}
+    \counterwithout{equation}{chapter}
+    \renewcommand{\thefigure}{图~\arabic{figure}}
+    \renewcommand{\thetable}{表~\arabic{table}}
+    \renewcommand{\theequation}{\arabic{equation}}
     \setlength{\parindent}{2\ccwd}
     \setlength{\parskip}{0pt}
     \setcounter{secnumdepth}{3}
@@ -147,8 +154,10 @@
     \LiamOldAppendix%
     \counterwithin{figure}{chapter}
     \counterwithin{table}{chapter}
+    \counterwithin{equation}{chapter}
     \renewcommand{\thefigure}{图~\thechapter.\arabic{figure}}
     \renewcommand{\thetable}{表~\thechapter.\arabic{table}}
+    \renewcommand{\theequation}{\thechapter.\arabic{equation}}
     \appendixsectioning
     \titlecontents{chapter}[4.5em]{}{\contentslabel{4.5em}}{\hspace*{-4.5em}}{\titlerule*[.7pc]{$\cdot$}\contentspage}
 }
@@ -257,15 +266,60 @@
 \setlist[stdenum,1]{label = {\alph*)}, leftmargin = 5\ccwd}
 \setlist[stdenum,2]{label = {\arabic*)}, leftmargin = 2\ccwd}
 
+% ----- Terms and Provision Presentation
+\newenvironment{term}[2]{%
+    \begingroup
+    \ctexset{section = {beforeskip = {0pt}, afterskip = {0pt}}}
+    \section[#1]{#1\quad#2}
+    \endgroup
+}{}
+\NewDocumentCommand{\termsource}{m}{%
+    \par\noindent\hspace*{2\ccwd}[来源：#1]\par
+}
+\NewDocumentCommand{\stdnote}{o m}{%
+    \par\noindent\hspace*{2\ccwd}%
+    \parbox[t]{\linewidth - 2\ccwd}{%
+        \zihao{-5}\songti
+        \@hangfrom{{\heiti 注\IfNoValueTF{#1}{：}{#1：}}}#2%
+    }\par
+}
+\NewDocumentCommand{\stdexample}{o m}{%
+    \par\noindent\hspace*{2\ccwd}%
+    \parbox[t]{\linewidth - 2\ccwd}{%
+        \zihao{-5}\songti
+        \@hangfrom{{\heiti 示例\IfNoValueTF{#1}{：}{#1：}}}#2%
+    }\par
+}
+\NewDocumentCommand{\stdexampleframe}{o m}{%
+    \par\noindent\hspace*{2\ccwd}{\zihao{-5}\heiti 示例\IfNoValueTF{#1}{：}{#1：}}\par
+    \noindent\hspace*{2\ccwd}%
+    \framebox{%
+        \parbox{\linewidth - 2\ccwd - 2\fboxsep - 2\fboxrule}{\zihao{-5}\songti#2}%
+    }\par
+}
+\NewDocumentCommand{\stdunits}{m}{%
+    \par{\zihao{-5}\songti\hfill#1\par}
+}
+\NewDocumentCommand{\stdfootnotetext}{m m}{%
+    \par\noindent\hspace*{2\ccwd}{\zihao{-5}\songti\textsuperscript{#1}#2}\par
+}
+\NewDocumentCommand{\importantnotice}{m m}{%
+    \par\noindent\hspace*{2\ccwd}{\zihao{5}\heiti#1：#2}\par
+}
+
 % ----- Footnote Style
+\renewcommand{\thefootnote}{\arabic{footnote})}
 \renewcommand\@makefntext[1]{%
     \hspace*{2\ccwd}\zihao{-5}\songti%
-        \makebox[3\ccwd][l]{注~\@thefnmark:}\parbox[t]{\linewidth - 5\ccwd}{#1}%
+        \makebox[3\ccwd][l]{\@thefnmark}\parbox[t]{\linewidth - 5\ccwd}{#1}%
+}
+\renewcommand{\footnoterule}{%
+    \par\noindent\rule{0.25\linewidth}{0.4pt}\par\vspace{2pt}%
 }
 
 % ----- Index and Bib
 \newcommand*{\GBindexlocation}{%
-    \arabic{chapter}%
+    \thechapter%
     \ifnum\arabic{section}>0 90\arabic{section}\fi
     \ifnum\arabic{subsection}>0 90\arabic{subsection}\fi
 }
@@ -303,7 +357,7 @@
 % ----- Style of Table of Contents
 \hypersetup{hidelinks}
 \contentsmargin{2em}
-\titlecontents{chapter}[1.2em]{}{\contentslabel{1.2em}}{\hspace*{-1.2em}}{\titlerule*[.7pc]{$\cdot$}\contentspage}
+\titlecontents{chapter}[1.8em]{}{\contentslabel{1.8em}}{\hspace*{-1.8em}}{\titlerule*[.7pc]{$\cdot$}\contentspage}
 \titlecontents{section}[3.8em]{}{\contentslabel{2.3em}}{\hspace*{-2.3em}}{\titlerule*[.7pc]{$\cdot$}\contentspage}
 \titlecontents{subsection}[6.1em]{}{\contentslabel{3.2em}}{\hspace*{-3.2em}}{\titlerule*[.7pc]{$\cdot$}\contentspage}
 \titlecontents{figure}[3.0em]{}{\contentslabel{3.0em}}{\hspace*{-3.0em}}{\titlerule*[.7pc]{$\cdot$}\contentspage}
