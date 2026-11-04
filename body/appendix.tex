@@ -2,22 +2,40 @@
 \label{appendix:normative}
 本附录展示规范性附录以及附录中图、表和数学公式的编号。\index{规范性附录}
 
+\section{附录中的图}
+附录中的图按附录编号重新编号，并保留图题、图注和图脚注的顺序。
+
 \begin{figure}[htb]
     \centering
     \rule{3cm}{2cm}
+    \stdnote{附录中的图注示例。}
+    \stdfootnotetext{a}{附录中的图脚注示例。}
     \caption{附录图题示例}
     \label{fig:appendix}
 \end{figure}
+
+\begin{figure}[htb]
+    \centering
+    \rule{3cm}{2cm}
+    \caption{附录第二个图题示例}
+    \label{fig:appendix-second}
+\end{figure}
+
+\section{附录中的表和公式}
+附录中的表和公式同样按附录编号重新编号。
 
 \begin{table}[htb]
     \caption{附录表题示例}
     \label{tab:appendix}
     \centering\zihao{-5}\songti
-    \begin{tabular}{|c|c|}
+    \setlength{\arrayrulewidth}{1pt}
+    \begin{tabular}{!{\vrule width 1pt}c|c!{\vrule width 1pt}}
         \hline
         项目 & 内容 \\
         \hline
         示例 & 内容 \\
+        \hline
+        \multicolumn{2}{!{\vrule width 1pt}l!{\vrule width 1pt}}{注：附录表中的注。}\\
         \hline
     \end{tabular}
 \end{table}
@@ -27,8 +45,21 @@
     \label{eq:appendix}
 \end{equation}
 
-\ref{fig:appendix}、\ref{tab:appendix} 和 \eqref{eq:appendix} 的编号均包含附录编号。
+\begin{equation}
+    z = x^2 + y^2
+    \label{eq:appendix-second}
+\end{equation}
+
+\ref{fig:appendix}、\ref{fig:appendix-second}、\ref{tab:appendix}、\eqref{eq:appendix} 和 \eqref{eq:appendix-second} 的编号均包含附录编号。
 
 \zchapter{资料性附录示例}
 \label{appendix:informative}
 本附录为资料性附录示例，可给出有助于理解或使用文件的附加信息。\index{资料性附录}
+
+\section{资料性附录的条}
+资料性附录也可细分条，并在目次中显示相应条目。
+
+\begin{stdlist}
+    \item 资料性附录中的列项；
+    \item 用于检查附录内容与普通正文格式一致性的长列项，回行时仍应与列项正文位置对齐。
+\end{stdlist}

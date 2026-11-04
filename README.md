@@ -116,6 +116,9 @@ make.bat              Windows 构建入口
 - `\stdclause{条文}`：无标题条，编号后接排条文。
 - `stdlist`：破折号列项，嵌套时使用间隔号。
 - `stdenum`：字母编号列项，嵌套时使用数字编号。
+- `stdsymbols`：符号、缩略语和公式释文清单。
+
+第一层列项的标记/内容及回行位于第 2/5 个汉字位，第二层位于第 4/7 个汉字位。`body/structure.tex` 包含长列项和嵌套列项示例。
 
 ### 术语条目
 
@@ -140,7 +143,7 @@ make.bat              Windows 构建入口
 - `\importantnotice{注意}{内容}`：重要提示，也可使用“危险”“警告”等等级词。
 - 普通正文继续使用 `\footnote{内容}`、`\label`、`\ref`、`\eqref` 和 `\cite`。
 
-`body/elements.tex` 还包含使用 `longtable` 编写的跨页续表示例。
+表格外框、表头下框线以及表注/表脚注区域使用 1 磅实线。`body/elements.tex` 包含多列数字表、分图、长公式和 100 行跨三页 `longtable` 示例；续页重复表编号、单位陈述和表头，每页均保留底框。
 
 ## 参考文献
 

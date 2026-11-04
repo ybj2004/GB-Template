@@ -12,37 +12,38 @@
 
 \section{列项}
 \subsection{破折号列项}
-第一层次列项及第二层次列项的缩进和回行位置如下：\index{列项}
+第一层次列项的标记从第二个汉字位起排，内容从第五个汉字位起排；第二层次分别位于第四和第七个汉字位。\index{列项}
 \begin{stdlist}
-    \item 第一层次列项甲；
-    \item 第一层次列项乙：
+    \item \textbf{短列项}：用于检查标记与内容之间的位置；
+    \item \textbf{长列项}：这是一段需要回行的较长列项内容，用于检查回行后是否与第一个汉字位置对齐，而不是与破折号或版心左边界对齐；
+    \item 包含下一层次的列项：
     \begin{stdlist}
-        \item 第二层次列项甲；
-        \item 第二层次列项乙，内容较长时用于检查回行后的悬挂缩进位置。
+        \item 第二层次短列项；
+        \item 第二层次长列项，内容需要回行，用于检查间隔号位于第四个汉字位、正文及回行位于第七个汉字位；
     \end{stdlist}
-    \item 第一层次列项丙。
+    \item 嵌套之后继续第一层次列项。
 \end{stdlist}
 
 \subsection{字母和数字编号列项}
 需要识别或表明先后顺序时，可使用编号列项：
 \begin{stdenum}
     \item 编号列项甲；
-    \item 编号列项乙：
+    \item 编号列项乙，使用较长内容检查字母编号列项的回行位置与破折号列项是否一致：
     \begin{stdenum}
         \item 第二层次数字编号甲；
-        \item 第二层次数字编号乙。
+        \item 第二层次数字编号乙，使用长内容检查数字编号后的正文和回行是否位于第七个汉字位。
     \end{stdenum}
     \item 编号列项丙。
 \end{stdenum}
 
 \chapter{符号和缩略语}
 下列符号和缩略语适用于本文件。\index{符号和缩略语}
-\begin{stdlist}
+\begin{stdsymbols}
     \item[$E$] 能量；
     \item[$m$] 质量；
     \item[GB] 国家标准代号；
     \item[ICS] 国际标准分类号。
-\end{stdlist}
+\end{stdsymbols}
 
 \chapter{分类和编码}
 本章为分类和编码要素的占位示例。正式文件应给出标准化对象的划分以及分类结果的命名或编码规则。\index{分类和编码}
