@@ -279,11 +279,10 @@
 }
 
 % ----- Terms and Provision Presentation
-\newenvironment{term}[2]{%
-    \begingroup
-    \ctexset{section = {beforeskip = {0pt}, afterskip = {0pt}}}
-    \section[#1]{#1\quad#2}
-    \endgroup
+\newenvironment{term}[3][section]{%
+    \par\refstepcounter{#1}%
+    \noindent{\zihao{5}\heiti\csname the#1\endcsname}\par
+    \noindent\hspace*{2\ccwd}{\zihao{5}\heiti#2\quad#3}\par
 }{}
 \NewDocumentCommand{\termsource}{m}{%
     \par\noindent\hspace*{2\ccwd}[来源：#1]\par
