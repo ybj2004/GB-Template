@@ -13,6 +13,9 @@
 \RequirePackage{calc}
 \RequirePackage{etoolbox}
 \RequirePackage{caption}
+\RequirePackage{enumitem}
+\RequirePackage{longtable}
+\RequirePackage{amsmath}
 \RequirePackage{titlesec}
 \RequirePackage{titletoc}
 \RequirePackage{hologo}
@@ -97,8 +100,8 @@
             nameformat = {},
             aftername = {\quad},
             titleformat = {},
-            beforeskip = {0ex},
-            afterskip = {2.3ex plus .2ex},
+            beforeskip = {\baselineskip},
+            afterskip = {\baselineskip},
             indent = {0pt}
         },
         section = {
@@ -108,8 +111,8 @@
             nameformat = {},
             aftername = {\quad},
             titleformat = {},
-            beforeskip = {-.5em plus -.1em minus -.1em},
-            afterskip = {.5em plus .1em},
+            beforeskip = {.5\baselineskip},
+            afterskip = {.5\baselineskip},
             indent = {0pt}
         },
         subsection = {
@@ -119,22 +122,24 @@
             nameformat = {},
             aftername = {\quad},
             titleformat = {},
-            beforeskip = {-.5em plus -.1em minus -.1em},
-            afterskip = {.5em plus .1em},
+            beforeskip = {.5\baselineskip},
+            afterskip = {.5\baselineskip},
             indent = {0pt}
         },
         subsubsection = {
             name = {,},
             number = {\arabic{chapter}.\arabic{section}.\arabic{subsection}.\arabic{subsubsection}},
-            format = {\zihao{5}\songti},
+            format = {\zihao{5}\heiti},
             nameformat = {},
             aftername = {\quad},
             titleformat = {},
-            beforeskip = {-.5em plus -.1em minus -.1em},
-            afterskip = {.5em plus .1em},
+            beforeskip = {.5\baselineskip},
+            afterskip = {.5\baselineskip},
             indent = {0pt}
         }
     }
+    \setlength{\parindent}{2\ccwd}
+    \setlength{\parskip}{0pt}
     \setcounter{secnumdepth}{3}
 }
 \let\LiamOldAppendix\appendix
@@ -215,6 +220,42 @@
 \renewcommand{\tablename}{\relax}
 \DeclareCaptionFont{heiti}{\heiti}
 \captionsetup{font = {heiti}, labelsep = {quad}}
+
+% ----- Clauses and Lists
+\NewDocumentCommand{\stdclause}{m}{%
+    \par\vspace{.5\baselineskip}
+    \refstepcounter{section}
+    \noindent{\zihao{5}\heiti\thesection\quad}{\zihao{5}\songti#1}\par
+    \vspace{.5\baselineskip}
+}
+\newlist{stdlist}{itemize}{2}
+\setlist[stdlist]{
+    align = left,
+    labelindent = 0pt,
+    labelsep = 0pt,
+    labelwidth = 3\ccwd,
+    itemindent = 0pt,
+    listparindent = 0pt,
+    parsep = 0pt,
+    itemsep = 0pt,
+    topsep = 0pt
+}
+\setlist[stdlist,1]{label = {——}, leftmargin = 5\ccwd}
+\setlist[stdlist,2]{label = {\textperiodcentered}, leftmargin = 2\ccwd}
+\newlist{stdenum}{enumerate}{2}
+\setlist[stdenum]{
+    align = left,
+    labelindent = 0pt,
+    labelsep = 0pt,
+    labelwidth = 3\ccwd,
+    itemindent = 0pt,
+    listparindent = 0pt,
+    parsep = 0pt,
+    itemsep = 0pt,
+    topsep = 0pt
+}
+\setlist[stdenum,1]{label = {\alph*)}, leftmargin = 5\ccwd}
+\setlist[stdenum,2]{label = {\arabic*)}, leftmargin = 2\ccwd}
 
 % ----- Footnote Style
 \renewcommand\@makefntext[1]{%
