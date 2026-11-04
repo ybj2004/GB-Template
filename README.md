@@ -95,8 +95,9 @@ make.bat              Windows 构建入口
 \begin{document}
 \input{preamble.tex}  % 前言和可选的引言
 \mainmatter
-\input{basic-use.tex} % 范围、规范性引用文件、术语和定义等
-\input{test.tex}      % 图、表、脚注和索引示例
+\input{basic-use.tex} % 范围、规范性引用文件和术语条目
+\input{structure.tex} % 层次、列项和其他结构要素
+\input{elements.tex}  % 图、表、公式、注、示例和引用
 \appendix\autoclearpage
 \input{appendix.tex}
 \end{document}
@@ -106,7 +107,40 @@ make.bat              Windows 构建入口
 - `\gchapter{标题}`：规范性附录。
 - `\zchapter{标题}`：资料性附录。
 - `\index{词语}`：加入索引。
-- 图、表在正文中连续编号，附录中按附录编号重新编号。
+- 图、表和公式在正文中连续编号，附录中按附录编号重新编号。
+
+### 章、条、段和列项
+
+正文有标题章的编号和标题上下各空一行；有标题条上下各空半行。段首缩进两个汉字，段间不额外增加空白。前言、引言、目次和附录使用各自的版式。
+
+- `\stdclause{条文}`：无标题条，编号后接排条文。
+- `stdlist`：破折号列项，嵌套时使用间隔号。
+- `stdenum`：字母编号列项，嵌套时使用数字编号。
+
+### 术语条目
+
+```tex
+\begin{term}{中文术语}{English equivalent}
+定义正文。
+\stdexample{术语条目中的示例。}
+\stdnote{术语条目中的注，置于示例之后。}
+\termsource{GB/T XXXXX—XXXX，条目编号，有修改}
+\end{term}
+```
+
+`term` 自动生成条目编号，中文术语与英文对应词位于同一行。来源按“定义—示例—注—来源”的顺序放置；无修改时省略“有修改”。
+
+### 注、示例及其他表述
+
+- `\stdnote{内容}`：单个注；`\stdnote[1]{内容}`：带编号注。
+- `\stdexample{内容}`：单个示例；`\stdexample[1]{内容}`：带编号示例。
+- `\stdexampleframe{内容}`：置于线框内的示例。
+- `\stdunits{单位为毫米}`：图或表的单位陈述。
+- `\stdfootnotetext{a}{内容}`：图脚注或表脚注。
+- `\importantnotice{注意}{内容}`：重要提示，也可使用“危险”“警告”等等级词。
+- 普通正文继续使用 `\footnote{内容}`、`\label`、`\ref`、`\eqref` 和 `\cite`。
+
+`body/elements.tex` 还包含使用 `longtable` 编写的跨页续表示例。
 
 ## 参考文献
 

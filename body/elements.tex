@@ -1,37 +1,149 @@
-\chapter{编排示例}
-\section{层次}
-\subsection{条的编号}
-\subsubsection{条标题}
-章、条及其编号和标题使用五号黑体，条文使用五号宋体。\index{层次}
-
-\section{图和表}
-图编号从引言开始一直连续到附录之前，图题位于图下方。\index{图}
+\chapter{要素的表述}
+\section{图}
+图与其前面的条文之间空一行，图题位于图下方。图中的注位于图脚注之上，图脚注位于图题之上。\index{图}
 
 \begin{figure}[htb]
+    \stdunits{单位为毫米}
     \centering
-    \rule{4cm}{3cm}
+    \rule{4cm}{3cm}\textsuperscript{a}
+    \stdnote{这是图中的注。}
+    \stdfootnotetext{a}{这是图脚注。}
     \caption{图题示例}
     \label{fig:example}
 \end{figure}
 
-表编号采用与图相同的连续编号方式，表题位于表上方。\ref{fig:example} 和 \ref{tab:example} 用于验证交叉引用。\index{表}
+\section{表}
+表题位于表上方，表中的注位于表内下方、表脚注之上。\index{表}
 
 \begin{table}[htb]
-    \centering
+    \stdunits{单位为毫米}
     \caption{表题示例}
     \label{tab:example}
+    \centering\zihao{-5}\songti
     \begin{tabular}{|c|c|}
         \hline
-        项目 & 内容 \\
+        项目 & 长度 \\
         \hline
-        示例甲 & 内容甲 \\
-        示例乙 & 内容乙 \\
+        示例甲 & 10 \\
+        示例乙 & 20\textsuperscript{a} \\
         \hline
     \end{tabular}
+    \stdnote{这是表中的注。}
+    \stdfootnotetext{a}{这是表脚注。}
 \end{table}
 
-\section{注和索引}
-脚注内容使用小五号宋体，并保持适当的页脚间距\footnote{这是一个用于验证脚注格式和页码位置的示例。}。索引用于指明文件中重要词语及其对应的位置。\index{索引}
+\subsection{表的转页接排}
+续表重复表编号和表头，并标明“续”。\index{续表}
+{\zihao{-5}\songti
+\setlength{\LTleft}{\fill}
+\setlength{\LTright}{\fill}
+\begin{longtable}{|c|c|}
+    \caption{跨页表题示例}
+    \label{tab:continued}\\
+    \hline
+    序号 & 内容 \\
+    \hline
+    \endfirsthead
+    \caption*{\thetable\quad（续）}\\
+    \hline
+    序号 & 内容 \\
+    \hline
+    \endhead
+    1 & 内容 01 \\
+    2 & 内容 02 \\
+    3 & 内容 03 \\
+    4 & 内容 04 \\
+    5 & 内容 05 \\
+    6 & 内容 06 \\
+    7 & 内容 07 \\
+    8 & 内容 08 \\
+    9 & 内容 09 \\
+    10 & 内容 10 \\
+    11 & 内容 11 \\
+    12 & 内容 12 \\
+    13 & 内容 13 \\
+    14 & 内容 14 \\
+    15 & 内容 15 \\
+    16 & 内容 16 \\
+    17 & 内容 17 \\
+    18 & 内容 18 \\
+    19 & 内容 19 \\
+    20 & 内容 20 \\
+    21 & 内容 21 \\
+    22 & 内容 22 \\
+    23 & 内容 23 \\
+    24 & 内容 24 \\
+    25 & 内容 25 \\
+    26 & 内容 26 \\
+    27 & 内容 27 \\
+    28 & 内容 28 \\
+    29 & 内容 29 \\
+    30 & 内容 30 \\
+    31 & 内容 31 \\
+    32 & 内容 32 \\
+    33 & 内容 33 \\
+    34 & 内容 34 \\
+    35 & 内容 35 \\
+    36 & 内容 36 \\
+    37 & 内容 37 \\
+    38 & 内容 38 \\
+    39 & 内容 39 \\
+    40 & 内容 40 \\
+    41 & 内容 41 \\
+    42 & 内容 42 \\
+    43 & 内容 43 \\
+    44 & 内容 44 \\
+    45 & 内容 45 \\
+    46 & 内容 46 \\
+    47 & 内容 47 \\
+    48 & 内容 48 \\
+    49 & 内容 49 \\
+    50 & 内容 50 \\
+    51 & 内容 51 \\
+    52 & 内容 52 \\
+    53 & 内容 53 \\
+    54 & 内容 54 \\
+    55 & 内容 55 \\
+    56 & 内容 56 \\
+    57 & 内容 57 \\
+    58 & 内容 58 \\
+    59 & 内容 59 \\
+    60 & 内容 60 \\
+    \multicolumn{2}{l}{注：跨页表结束时给出表注。}\\
+\end{longtable}
+}
 
-\section{示例}
-示例内容用于帮助理解文件条款，正式使用时应替换为与文件主题相关的技术内容。
+\section{数学公式}
+数学公式另行居中编排，编号右端对齐。公式编号从引言开始连续到附录之前。\index{数学公式}
+
+\begin{equation}
+    E = mc^2
+    \label{eq:energy}
+\end{equation}
+
+式中：
+
+$E$——能量；
+
+$m$——质量；
+
+$c$——真空中的光速。
+
+\section{注、示例和脚注}
+注只给出有助于理解或使用文件内容的附加信息，不包含要求型条款。\index{注}
+\stdnote{这是条文中的单个注。}
+\stdnote[1]{这是条文中的第一个注。}
+\stdnote[2]{这是条文中的第二个注。}
+
+示例用于帮助理解条款。示例不宜单独设章或条。\index{示例}
+\stdexample{这是单个示例。}
+\stdexample[1]{这是第一个示例。}
+\stdexample[2]{这是第二个示例。}
+\stdexampleframe{这是置于线框内的示例，可用于展示编排格式或避免与条款混淆。}
+
+正文脚注使用带半圆括号的阿拉伯数字编号\footnote{这是条文脚注，编号、缩进和分隔线均按规范设置。}。
+
+\section{引用和提示}
+\ref{fig:example}、\ref{tab:example}、\ref{tab:continued} 和 \eqref{eq:energy} 分别展示图、表和公式的引用。\index{交叉引用}
+
+附录~\ref{appendix:normative} 和附录~\ref{appendix:informative} 展示规范性及资料性附录的提示。资料性引用可使用文献条目\cite{lamport1994latex}。

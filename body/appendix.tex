@@ -1,4 +1,34 @@
-\gchapter{规范性附录标题}
-本附录为规范性附录示例。
-\zchapter{资料性附录标题}
-本附录为资料性附录示例。
+\gchapter{规范性附录示例}
+\label{appendix:normative}
+本附录展示规范性附录以及附录中图、表和数学公式的编号。\index{规范性附录}
+
+\begin{figure}[htb]
+    \centering
+    \rule{3cm}{2cm}
+    \caption{附录图题示例}
+    \label{fig:appendix}
+\end{figure}
+
+\begin{table}[htb]
+    \caption{附录表题示例}
+    \label{tab:appendix}
+    \centering\zihao{-5}\songti
+    \begin{tabular}{|c|c|}
+        \hline
+        项目 & 内容 \\
+        \hline
+        示例 & 内容 \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\begin{equation}
+    y = x + 1
+    \label{eq:appendix}
+\end{equation}
+
+\ref{fig:appendix}、\ref{tab:appendix} 和 \eqref{eq:appendix} 的编号均包含附录编号。
+
+\zchapter{资料性附录示例}
+\label{appendix:informative}
+本附录为资料性附录示例，可给出有助于理解或使用文件的附加信息。\index{资料性附录}
