@@ -16,6 +16,7 @@
 \RequirePackage{caption}
 \RequirePackage{enumitem}
 \RequirePackage{longtable}
+\RequirePackage{array}
 \RequirePackage{amsmath}
 \RequirePackage{titlesec}
 \RequirePackage{titletoc}
@@ -96,7 +97,7 @@
         chapter = {
             break = {\par},
             name = {,},
-            number = {\arabic{chapter}},
+            number = {\thechapter},
             format = {\zihao{5}\heiti},
             nameformat = {},
             aftername = {\quad},
@@ -107,7 +108,7 @@
         },
         section = {
             name = {,},
-            number = {\arabic{chapter}.\arabic{section}},
+            number = {\thechapter.\arabic{section}},
             format = {\zihao{5}\heiti},
             nameformat = {},
             aftername = {\quad},
@@ -118,7 +119,7 @@
         },
         subsection = {
             name = {,},
-            number = {\arabic{chapter}.\arabic{section}.\arabic{subsection}},
+            number = {\thechapter.\arabic{section}.\arabic{subsection}},
             format = {\zihao{5}\heiti},
             nameformat = {},
             aftername = {\quad},
@@ -129,7 +130,7 @@
         },
         subsubsection = {
             name = {,},
-            number = {\arabic{chapter}.\arabic{section}.\arabic{subsection}.\arabic{subsubsection}},
+            number = {\thechapter.\arabic{section}.\arabic{subsection}.\arabic{subsubsection}},
             format = {\zihao{5}\heiti},
             nameformat = {},
             aftername = {\quad},
@@ -240,7 +241,6 @@
 \newlist{stdlist}{itemize}{2}
 \setlist[stdlist]{
     align = left,
-    labelindent = 0pt,
     labelsep = 0pt,
     labelwidth = 3\ccwd,
     itemindent = 0pt,
@@ -249,12 +249,11 @@
     itemsep = 0pt,
     topsep = 0pt
 }
-\setlist[stdlist,1]{label = {——}, leftmargin = 5\ccwd}
-\setlist[stdlist,2]{label = {\textperiodcentered}, leftmargin = 2\ccwd}
+\setlist[stdlist,1]{label = {——}, labelindent = 2\ccwd, leftmargin = 5\ccwd}
+\setlist[stdlist,2]{label = {\textperiodcentered}, labelindent = -1\ccwd, leftmargin = 2\ccwd}
 \newlist{stdenum}{enumerate}{2}
 \setlist[stdenum]{
     align = left,
-    labelindent = 0pt,
     labelsep = 0pt,
     labelwidth = 3\ccwd,
     itemindent = 0pt,
@@ -263,8 +262,21 @@
     itemsep = 0pt,
     topsep = 0pt
 }
-\setlist[stdenum,1]{label = {\alph*)}, leftmargin = 5\ccwd}
-\setlist[stdenum,2]{label = {\arabic*)}, leftmargin = 2\ccwd}
+\setlist[stdenum,1]{label = {\alph*)}, labelindent = 2\ccwd, leftmargin = 5\ccwd}
+\setlist[stdenum,2]{label = {\arabic*)}, labelindent = -1\ccwd, leftmargin = 2\ccwd}
+\newlist{stdsymbols}{itemize}{1}
+\setlist[stdsymbols]{
+    align = left,
+    labelindent = 2\ccwd,
+    labelsep = 0pt,
+    labelwidth = 3\ccwd,
+    leftmargin = 5\ccwd,
+    itemindent = 0pt,
+    listparindent = 0pt,
+    parsep = 0pt,
+    itemsep = 0pt,
+    topsep = 0pt
+}
 
 % ----- Terms and Provision Presentation
 \newenvironment{term}[2]{%
