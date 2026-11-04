@@ -1,28 +1,68 @@
 %!TEX root = GB-template.tex
-\NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\ProvidesClass{GB-template}[2014/05/24 v1.0 GB-template document class]
+\NeedsTeXFormat{LaTeX2e}[2020/10/01]
+\ProvidesClass{GB-template}[2026/11/03 v2.0.0 GB-template document class]
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{ctexbook}}
 \ProcessOptions
-\LoadClass[UTF8, fancyhdr, hyperref]{ctexbook}[2009/09/13]
+\LoadClass[UTF8]{ctexbook}[2020/01/01]
 
 % ----- Loading packages
 \RequirePackage{geometry}
 \RequirePackage{pbox}
 \RequirePackage{tikz}
 \RequirePackage{graphicx}
+\RequirePackage{lmodern}
 \RequirePackage{calc}
 \RequirePackage{etoolbox}
 \RequirePackage{caption}
-\RequirePackage{chngcntr}
+\RequirePackage{enumitem}
+\RequirePackage{longtable}
+\RequirePackage{array}
+\RequirePackage{amsmath}
 \RequirePackage{titlesec}
 \RequirePackage{titletoc}
 \RequirePackage{hologo}
-\RequirePackage{letltxmacro}
-\RequirePackage[xindy]{imakeidx}
+\RequirePackage[noautomatic]{imakeidx}
+\RequirePackage[backend = biber, style = gb7714-2025]{biblatex}
+\RequirePackage{fancyhdr}
+\RequirePackage{hyperref}
+\addbibresource{bibfile.bib}
+\indexsetup{firstpagestyle = fancy}
+
+\renewbibmacro*{title+issuetitle}{%
+    \usebibmacro{periodical}%
+    \newunit
+    \iffieldundef{series}{}{\newunit\printfield{series}}%
+    \usebibmacro{periodical+issue}%
+    \iffieldundef{number}{}{\multinumberparser{\thefield{number}}}%
+    \iffieldundef{volume}
+        {\printfield{year}%
+            \iffieldundef{number}{}{\printtext{\mkbibparens{\multinumberfirst}}}%
+            \bibrangedash
+            \iffieldundef{endyear}{}{%
+                \printfield{endyear}%
+                \iffieldundef{number}{}{\printtext{\mkbibparens{\multinumbersecond}}}%
+            }%
+        }
+        {\multivolparser{\thefield{volume}}%
+            \printfield{year}%
+            \setunit{\periodicaldatevoldelim}%
+            \printtext{\multivolfirst}%
+            \iffieldundef{number}{}{\printtext{\mkbibparens{\multinumberfirst}}}%
+            \bibrangedash
+            \iffieldundef{endyear}{}{%
+                \printfield{endyear}%
+                \setunit{\periodicaldatevoldelim}%
+                \printtext{\multivolsecond}%
+                \iffieldundef{number}{}{\printtext{\mkbibparens{\multinumbersecond}}}%
+            }%
+        }%
+    \usebibmacro{issue}%
+    \newunit
+}
 
 % ----- Paper Layout
 \geometry{papersize = {210mm, 297mm}}
-\geometry{left = {25mm}, top = {10mm}, bottom = {20mm}, right = {15mm}}
+\geometry{left = {25mm}, top = {10mm}, bottom = {20mm}, right = {15mm}, headheight = {13pt}, footskip = {8mm}}
 
 % ----- Header and Footer
 \fancyhf{}
@@ -30,56 +70,120 @@
 \fancyhead[LE,RO]{\zihao{5}\heiti\usebiaozhunhao}
 \fancyfoot[LE]{\makebox[4mm][r]{\makebox[0pt][l]{\zihao{-5}\songti\thepage}}}
 \fancyfoot[RO]{\makebox[4mm][l]{\makebox[0pt][r]{\zihao{-5}\songti\thepage}}}
-\patchcmd{\chapter}{\thispagestyle{plain}}{\thispagestyle{fancy}}{}{}
+
 
 % Sectioning
-\CTEXsetup[titleformat = {\zihao{3}\heiti}, beforeskip = {8mm}, afterskip = {10mm}]{chapter}
-\CTEXoptions[contentsname = {目\qquad{}次}, bibname = {参~考~文~献}, indexname = {索\qquad\quad{}引}]
+\ctexset{
+    chapter = {
+        pagestyle = {fancy},
+        format = {\centering},
+        nameformat = {\zihao{3}\heiti},
+        titleformat = {\zihao{3}\heiti},
+        beforeskip = {8mm},
+        afterskip = {10mm}
+    },
+    contentsname = {目\qquad{}次},
+    bibname = {参~考~文~献},
+    indexname = {索\qquad\quad{}引}
+}
 \patchcmd{\listoffigures}{\chapter *{\listfigurename }\@mkboth {\MakeUppercase \listfigurename }{\MakeUppercase \listfigurename }}{\vskip 1.2ex}{}{}
 \patchcmd{\listoftables}{\chapter *{\listtablename }\@mkboth {\MakeUppercase \listtablename }{\MakeUppercase \listtablename }}{\vskip 1.2ex}{}{}
-\newcommand{\patchchapter}{%
-    \patchcmd{\caption@chapter@ORI}%
-        {\if@openright\cleardoublepage\else\clearpage\fi}%
-        {\relax\relax}{}{}%
-}
-\newcommand{\restorechapter}{%
-    \patchcmd{\caption@chapter@ORI}{\relax\relax}%
-        {\if@openright\cleardoublepage\else\clearpage\fi}%
-        {}{}%
-}
 \newcommand*{\autoclearpage}{\if@openright\cleardoublepage\else\clearpage\fi}
 \newcommand*{\clearevenpage}{\clearpage \if@twoside \ifodd\c@page \hbox{}\newpage \if@twocolumn \hbox{}\newpage \fi \fi \fi}
 \let\LiamOldMainmatter\mainmatter
 \renewcommand{\mainmatter}{\LiamOldMainmatter%
     \chapter*{\usename}%
-    \CTEXsetup[name = {,}, number = {\arabic{chapter}}, format = {\zihao{5}\heiti}, nameformat = {}, aftername = {\quad}, titleformat = {}, beforeskip = {0ex}, afterskip = {2.3ex plus .2ex}, indent = {0pt}]{chapter}%
-    \CTEXsetup[name = {,}, number = {\arabic{chapter}.\arabic{section}}, format = {\zihao{5}\heiti}, nameformat = {}, aftername = {\quad}, titleformat = {}, beforeskip = {-.5em plus -.1em minus -.1em}, afterskip = {.5em plus .1em}, indent = {0pt}]{section}%
-    \CTEXsetup[name = {,}, number = {\arabic{chapter}.\arabic{section}.\arabic{subsection}}, format = {\zihao{5}\heiti}, nameformat = {}, aftername = {\quad}, titleformat = {}, beforeskip = {-.5em plus -.1em minus -.1em}, afterskip = {.5em plus .1em}, indent = {0pt}]{subsection}%
-    \CTEXsetup[name = {,}, number = {\arabic{chapter}.\arabic{section}.\arabic{subsection}.\arabic{subsubsection}}, format = {\zihao{5}\songti}, nameformat = {}, aftername = {\quad}, titleformat = {}, beforeskip = {-.5em plus -.1em minus -.1em}, afterskip = {.5em plus .1em}, indent = {0pt}]{subsubsection}%
+    \ctexset{
+        chapter = {
+            break = {\par},
+            name = {,},
+            number = {\thechapter},
+            format = {\zihao{5}\heiti},
+            nameformat = {},
+            aftername = {\quad},
+            titleformat = {},
+            beforeskip = {\baselineskip},
+            afterskip = {\baselineskip},
+            indent = {0pt}
+        },
+        section = {
+            name = {,},
+            number = {\thechapter.\arabic{section}},
+            format = {\zihao{5}\heiti},
+            nameformat = {},
+            aftername = {\quad},
+            titleformat = {},
+            beforeskip = {.5\baselineskip},
+            afterskip = {.5\baselineskip},
+            indent = {0pt}
+        },
+        subsection = {
+            name = {,},
+            number = {\thechapter.\arabic{section}.\arabic{subsection}},
+            format = {\zihao{5}\heiti},
+            nameformat = {},
+            aftername = {\quad},
+            titleformat = {},
+            beforeskip = {.5\baselineskip},
+            afterskip = {.5\baselineskip},
+            indent = {0pt}
+        },
+        subsubsection = {
+            name = {,},
+            number = {\thechapter.\arabic{section}.\arabic{subsection}.\arabic{subsubsection}},
+            format = {\zihao{5}\heiti},
+            nameformat = {},
+            aftername = {\quad},
+            titleformat = {},
+            beforeskip = {.5\baselineskip},
+            afterskip = {.5\baselineskip},
+            indent = {0pt}
+        }
+    }
+    \counterwithout{figure}{chapter}
+    \counterwithout{table}{chapter}
+    \counterwithout{equation}{chapter}
+    \renewcommand{\thefigure}{图~\arabic{figure}}
+    \renewcommand{\thetable}{表~\arabic{table}}
+    \renewcommand{\theequation}{\arabic{equation}}
+    \setlength{\parindent}{2\ccwd}
+    \setlength{\parskip}{0pt}
     \setcounter{secnumdepth}{3}
-    \patchchapter
 }
 \let\LiamOldAppendix\appendix
 \renewcommand{\appendix}{%
     \LiamOldAppendix%
+    \counterwithin{figure}{chapter}
+    \counterwithin{table}{chapter}
+    \counterwithin{equation}{chapter}
+    \renewcommand{\thefigure}{图~\thechapter.\arabic{figure}}
+    \renewcommand{\thetable}{表~\thechapter.\arabic{table}}
+    \renewcommand{\theequation}{\thechapter.\arabic{equation}}
     \appendixsectioning
-    \restorechapter
-    \titlecontents{chapter}[3.0em]{}{\contentslabel{3.0em}}{\hspace*{-3.0em}}{\titlerule*[.7pc]{$\cdot$}\contentspage}
+    \titlecontents{chapter}[4.5em]{}{\contentslabel{4.5em}}{\hspace*{-4.5em}}{\titlerule*[.7pc]{$\cdot$}\contentspage}
 }
 \newcommand{\appendixsectioning}{%
-    % \CTEXsetup[format = {\centering}]{chapter}
-    \CTEXsetup[format = {\centering}, nameformat = {\zihao{5}\heiti}, titleformat = {\zihao{5}\heiti}, beforeskip = {9mm}, afterskip = {10mm}, aftername = {\endgraf}]{chapter}%
+    \ctexset{chapter = {
+        break = {\if@openright\cleardoublepage\else\clearpage\fi},
+        name = {附\quad 录,},
+        format = {\centering},
+        nameformat = {\zihao{5}\heiti},
+        titleformat = {\zihao{5}\heiti},
+        beforeskip = {9mm},
+        afterskip = {10mm},
+        aftername = {\endgraf}
+    }}
 }
-\newcommand{\gchapter}[1]{\chapter[（规范性附录）#1]{（规范性附录）\\#1}}
-\newcommand{\zchapter}[1]{\chapter[（资料性附录）#1]{（资料性附录）\\#1}}
+\newcommand{\gchapter}[1]{\chapter[（规范性）#1]{（规范性）\\#1}}
+\newcommand{\zchapter}[1]{\chapter[（资料性）#1]{（资料性）\\#1}}
 
 % ----- Title Page
 \newcommand{\maketitlepage}{%
     \pagestyle{empty}
     \begingroup
     \setlength{\parindent}{0pt}
-    \hskip-1.2mm\begin{tikzpicture}
-    \node at (0, 0) {\setlength{\fboxsep}{0pt}\makebox[0pt][l]{\parbox[t][0pt]{170mm}{\zihao{5}\bfseries ICS \useICS\\\usefenlei}}};
+    \begin{tikzpicture}
+    \node at (0, 0) {\setlength{\fboxsep}{0pt}\makebox[0pt][l]{\parbox[t][0pt]{170mm}{\zihao{5}\heiti ICS \useICS\\CCS \useCCS}}};
     \node at (85mm, -36mm) {\resizebox{170mm}{8mm}{\titlefont\bfseries\zihao{2}中~华~人~民~共~和~国~国~家~标~准}};
     % \draw[fill] (119mm, -23mm) rectangle (159mm, -3mm);
     \node at (139mm, -13mm) {\includegraphics[width = 40mm, height = 20mm]{GB-LOGO.jpg}};
@@ -99,7 +203,7 @@
     \endgroup
     \autoclearpage
     \setcounter{page}{1}
-    \newgeometry{left = {25mm}, top = {30mm}, bottom = {24mm}, right = {20mm}, headsep = {5mm}, footskip = {4mm}}
+    \newgeometry{left = {25mm}, top = {30mm}, bottom = {24mm}, right = {20mm}, headsep = {5mm}, headheight = {13pt}, footskip = {8mm}}
     \pagestyle{fancy}
 }
 
@@ -108,7 +212,8 @@
 
 % ----- Parameters
 \newcommand*{\ICS}[1]{\newcommand*{\useICS}{#1}}
-\newcommand*{\fenlei}[1]{\newcommand*{\usefenlei}{#1}}
+\newcommand*{\CCS}[1]{\newcommand*{\useCCS}{#1}}
+\newcommand*{\fenlei}[1]{\CCS{#1}}
 \newcommand*{\biaozhunhao}[1]{\newcommand*{\usebiaozhunhao}{#1}}
 \newcommand*{\daitibiaozhunhao}[1]{\newcommand*{\usedaitibiaozhunhao}{#1}}
 \newcommand*{\name}[1]{\newcommand*{\usename}{#1}}
@@ -119,76 +224,165 @@
 \newcommand*{\shishidate}[1]{\newcommand*{\useshishidate}{#1}}
 
 % ----- Caption Style of Figure and Table
-\counterwithin{figure}{chapter}
-\counterwithin{table}{chapter}
-\renewcommand{\thefigure}{图~\thechapter.\arabic{figure}}
-\renewcommand{\thetable}{图~\thechapter.\arabic{table}}
+\renewcommand{\thefigure}{图~\arabic{figure}}
+\renewcommand{\thetable}{表~\arabic{table}}
 \renewcommand{\figurename}{\relax}
 \renewcommand{\tablename}{\relax}
-\captionsetup{font = {bf}}
+\DeclareCaptionFont{heiti}{\heiti}
+\captionsetup{font = {heiti}, labelsep = {quad}}
+
+% ----- Clauses and Lists
+\NewDocumentCommand{\stdclause}{m}{%
+    \par\vspace{.5\baselineskip}
+    \refstepcounter{section}
+    \noindent{\zihao{5}\heiti\thesection\quad}{\zihao{5}\songti#1}\par
+    \vspace{.5\baselineskip}
+}
+\newcommand*{\GBsecondbullet}{\raisebox{0.15em}{\scalebox{0.75}{\textbullet}}}
+\newlist{stdlist}{itemize}{2}
+\setlist[stdlist]{
+    align = left,
+    labelsep = 0pt,
+    labelwidth = 3\ccwd,
+    itemindent = 0pt,
+    listparindent = 0pt,
+    parsep = 0pt,
+    itemsep = 0pt,
+    topsep = 0pt
+}
+\setlist[stdlist,1]{label = {——}, leftmargin = 5\ccwd}
+\setlist[stdlist,2]{label = {\GBsecondbullet}, leftmargin = 2\ccwd}
+\newlist{stdenum}{enumerate}{2}
+\setlist[stdenum]{
+    align = left,
+    labelsep = 0pt,
+    labelwidth = 3\ccwd,
+    itemindent = 0pt,
+    listparindent = 0pt,
+    parsep = 0pt,
+    itemsep = 0pt,
+    topsep = 0pt
+}
+\setlist[stdenum,1]{label = {\alph*)}, leftmargin = 5\ccwd}
+\setlist[stdenum,2]{label = {\arabic*)}, leftmargin = 2\ccwd}
+\newlist{stdsymbols}{itemize}{1}
+\setlist[stdsymbols]{
+    align = left,
+    labelsep = 0pt,
+    labelwidth = 3\ccwd,
+    leftmargin = 5\ccwd,
+    itemindent = 0pt,
+    listparindent = 0pt,
+    parsep = 0pt,
+    itemsep = 0pt,
+    topsep = 0pt
+}
+
+% ----- Terms and Provision Presentation
+\newenvironment{term}[3][section]{%
+    \par\refstepcounter{#1}%
+    \noindent{\zihao{5}\heiti\csname the#1\endcsname}\par
+    \noindent\hspace*{2\ccwd}{\zihao{5}\heiti#2\quad#3}\par
+}{}
+\NewDocumentCommand{\termsource}{m}{%
+    \par\noindent\hspace*{2\ccwd}[来源：#1]\par
+}
+\NewDocumentCommand{\stdnote}{o m}{%
+    \par\noindent\hspace*{2\ccwd}%
+    \parbox[t]{\linewidth - 2\ccwd}{%
+        \zihao{-5}\songti
+        \@hangfrom{{\heiti 注\IfNoValueTF{#1}{：}{#1：}}}#2%
+    }\par
+}
+\NewDocumentCommand{\stdexample}{o m}{%
+    \par\noindent\hspace*{2\ccwd}{\zihao{-5}\heiti 示例\IfNoValueTF{#1}{：}{#1：}}\par
+    \noindent\hspace*{2\ccwd}%
+    \parbox[t]{\linewidth - 2\ccwd}{\zihao{-5}\songti#2}\par
+}
+\NewDocumentCommand{\stdexampleframe}{o m}{%
+    \par\noindent\hspace*{2\ccwd}{\zihao{-5}\heiti 示例\IfNoValueTF{#1}{：}{#1：}}\par
+    \noindent\hspace*{2\ccwd}%
+    \framebox{%
+        \parbox{\linewidth - 2\ccwd - 2\fboxsep - 2\fboxrule}{\zihao{-5}\songti#2}%
+    }\par
+}
+\NewDocumentCommand{\stdunits}{m}{%
+    \par\noindent{\zihao{-5}\songti\hfill#1\par}
+}
+\NewDocumentCommand{\stdfootnotetext}{m m}{%
+    \par\noindent\hspace*{2\ccwd}%
+    \parbox[t]{\linewidth - 2\ccwd}{%
+        \zihao{-5}\songti
+        \@hangfrom{\textsuperscript{#1}}#2%
+    }\par
+}
+\NewDocumentCommand{\importantnotice}{m m}{%
+    \par\noindent\hspace*{2\ccwd}{\zihao{5}\heiti#1：#2}\par
+}
 
 % ----- Footnote Style
+\renewcommand{\thefootnote}{\arabic{footnote})}
 \renewcommand\@makefntext[1]{%
     \hspace*{2\ccwd}\zihao{-5}\songti%
-        \makebox[3\ccwd][l]{注~\@thefnmark:}\parbox[t]{\linewidth - 5\ccwd}{#1}%
+        \makebox[3\ccwd][l]{\@thefnmark}\parbox[t]{\linewidth - 5\ccwd}{#1}%
+}
+\renewcommand{\footnoterule}{%
+    \par\noindent\rule{0.25\linewidth}{0.4pt}\par\vspace{2pt}%
 }
 
 % ----- Index and Bib
-% \renewcommand{\imki@wrindexentrysplit}[3]{%
-% \expandafter\protected@write\csname#1@idxfile\endcsname{}%
-%     {\string\indexentry{#2}{\arabic{chapter}90\arabic{section}90\arabic{subsection}90\arabic{subsubsection}}}%
-% }
+\newcommand*{\GBindexlocation}{%
+    \thechapter%
+    \ifnum\arabic{section}>0 90\arabic{section}\fi
+    \ifnum\arabic{subsection}>0 90\arabic{subsection}\fi
+}
 \renewcommand{\imki@wrindexentrysplit}[3]{%
 \expandafter\protected@write\csname#1@idxfile\endcsname{}%
-    {\string\indexentry{#2}{\arabic{chapter}90\arabic{section}90\arabic{subsection}}}%
+    {\string\indexentry{#2}{\GBindexlocation}}%
 }
-\patchcmd{\imki@makeindex}{\edef\imki@program{\imki@progdefault}}{\edef\imki@program{zhmakeindex}}{}{}
-\patchcmd{\imki@putindex}{\@input@}{%
-  \imki@exec{python adjustind.py \jobname}\@input@}{}{}
 
 \AtBeginDocument{%
     \makeindex[options=-s gb-idxstyle.mst, columns = 1]%
-    \bibliographystyle{gbt7714-2005}%
     \frontmatter%
     \renewcommand{\thepage}{\Roman{page}}%
     \maketitlepage%
-    \patchchapter%
     \tableofcontents\listoffigures\listoftables%
-    \restorechapter%
 }
-% \AtBeginDocument{\makeindex[options=-s gb-idxstyle.mst, columns = 1, intoc = true]}
 
 
 % ----- Back Cover
+\newcommand{\makeendline}{%
+    \par\vspace{\baselineskip}
+    \noindent\centerline{\rule{0.25\linewidth}{1pt}}
+}
 \newcommand{\makecoverpage}{%
     \clearevenpage
     \newgeometry{scale = 1}
-    \begin{tikzpicture}
-        \node at (0, 0) {};
-        \node at (\paperwidth - 5mm, -25mm) {\rotatebox[origin = br]{90}{\makebox[0pt][r]{\pbox{.5\textwidth}{\linespread{1}\selectfont\bfseries\usebiaozhunhao\\\phantom{\bfseries\usebiaozhunhao}}}}};
+    \begin{tikzpicture}[remember picture, overlay]
+        \node[rotate = 90, anchor = north, inner sep = 0] at ([xshift = -5mm, yshift = -25mm]current page.north east) {\pbox{.5\textwidth}{\linespread{1}\selectfont\bfseries\usebiaozhunhao\\\phantom{\bfseries\usebiaozhunhao}}};
     \end{tikzpicture}
 }
 \AtEndDocument{%
     \backmatter
-    \nocite*{}
-    \bibliography{bibfile}
     \addcontentsline{toc}{chapter}{参考文献}
-    \printindex
+    \printbibliography
     \addcontentsline{toc}{chapter}{索引}
+    \printindex
+    \makeendline
     \makecoverpage
 }
 
 % ----- Style of Table of Contents
 \hypersetup{hidelinks}
-\contentsmargin{1em}
-\titlecontents{chapter}[1.2em]{}{\contentslabel{1.2em}}{\hspace*{-1.2em}}{\titlerule*[.7pc]{$\cdot$}\contentspage}
+\contentsmargin{2em}
+\titlecontents{chapter}[1.8em]{}{\contentslabel{1.8em}}{\hspace*{-1.8em}}{\titlerule*[.7pc]{$\cdot$}\contentspage}
 \titlecontents{section}[3.8em]{}{\contentslabel{2.3em}}{\hspace*{-2.3em}}{\titlerule*[.7pc]{$\cdot$}\contentspage}
 \titlecontents{subsection}[6.1em]{}{\contentslabel{3.2em}}{\hspace*{-3.2em}}{\titlerule*[.7pc]{$\cdot$}\contentspage}
 \titlecontents{figure}[3.0em]{}{\contentslabel{3.0em}}{\hspace*{-3.0em}}{\titlerule*[.7pc]{$\cdot$}\contentspage}
 \titlecontents{table}[3.0em]{}{\contentslabel{3.0em}}{\hspace*{-3.0em}}{\titlerule*[.7pc]{$\cdot$}\contentspage}
 
 % ----- Title Font
-\newcommand*{\titlefont}{\CJKfontspec{SimSun}}
+\newcommand*{\titlefont}{\CJKfontspec[AutoFakeBold]{SimSun}}
 
 % ----- Logo
 \newcommand*{\BibTeX}{\hologo{BibTeX}}

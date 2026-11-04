@@ -1,19 +1,92 @@
-\chapter{模板的基本使用}
-「要求」中大多数细节都能通过 \LaTeX{} 比较舒服地实现，唯独「索引」\index{索引}部分是个老大难。好在经过一番实践，最终是将之搞定，不过也因此给模板的使用带来了一些问题——主要是需要进行一些安装和配置。
+\importantnotice{注意}{本文件为模板排版示例，不应将示例内容作为实际技术要求。}
 
-除掉模板文件内包含的东西，还需要额外下载安装名为 Python\index{Python} 的脚本语言解释器。你可以在\href{https://www.python.org/ftp/python/2.7.6/}{\fbox{这里}}找到适用于全部平台的 Python。比如适用于 32 位 Windows 系统的版本是\href{https://www.python.org/ftp/python/2.7.6/python-2.7.6.msi}{\fbox{这个}}，而 64 位的 Windows 系统则应该安装\href{https://www.python.org/ftp/python/2.7.6/python-2.7.6.amd64.msi}{\fbox{这个}}。
+\chapter{范围}
+本文件给出标准化文件的常用结构、层次和要素编排示例，适用于使用本模板起草标准化文件。\index{范围}
 
-此外，为了让 \LaTeX{} 能够载入外部程序，在执行 \hologo{XeLaTeX} 的时候，还必须给它加上 \verb|--shell-escape| \index{-{}-shell-escape}选项，所以整个命令看起来像是下面这样：
+\chapter{规范性引用文件}
+下列文件中的内容通过文中的规范性引用而构成本文件必不可少的条款。其中，注日期的引用文件，仅该日期对应的版本适用于本文件；不注日期的引用文件，其最新版本（包括所有的修改单）适用于本文件。\index{规范性引用文件}
 
-\begin{quote}
-\begin{verbatim}
-xelatex --shell-escape GB-template
-bibtex GB-template
-xelatex --shell-escape GB-template
-xelatex --shell-escape GB-template
-\end{verbatim}
-\end{quote}
+GB/T 1.1—2020 标准化工作导则 第1部分：标准化文件的结构和起草规则
 
-当然，这有点复杂了。所以我准备了名为 \verb|make.bat| 的批处理文件，自动做这些工作。你只需要在编写好 \LaTeX{} 文档之后，双击运行这个文件就会生成 PDF 了。
+GB/T 7714—2025 信息与文献 参考文献著录规则
 
-最后，为了保证文章内没有乱码，所有的文件必须使用 UTF-8 编码\index{编码}来保存。这一点尤为重要，但却不是我所能控制的了，因为这是「用户」使用时候应当注意的问题。
+\chapter{术语和定义}
+GB/T 20000.1 界定的以及下列术语和定义适用于本文件。\index{术语和定义}
+
+\section{文件}
+\begin{term}[subsection]{标准化文件}{standardizing document}
+通过标准化活动制定的文件。
+\termsource{GB/T 20000.1—2014，5.2}
+\end{term}
+
+\begin{term}[subsection]{标准}{standard}
+通过标准化活动，按照规定的程序经协商一致制定，为各种活动或其结果提供规则、指南或特性，供共同使用和重复使用的文件。
+\termsource{GB/T 20000.1—2014，5.3}
+\end{term}
+
+\begin{term}[subsection]{基础标准}{basic standard}
+以相互理解为编制目的形成的具有广泛适用范围的标准（3.1.2）。
+\stdnote{通常包括术语标准、符号标准、分类标准、试验标准等。}
+\end{term}
+
+\begin{term}[subsection]{通用标准}{general standard}
+包含某个或多个特定领域普遍适用的条款（3.3.1）的标准（3.1.2）。
+\stdnote{通用标准在其名称中常包含词语“通用”，例如通用规范、通用技术要求等。}
+\end{term}
+
+\section{文件的结构}
+\begin{term}[subsection]{结构}{structure}
+文件中层次、要素以及附录、图和表的位置和排列顺序。
+\end{term}
+
+\begin{term}[subsection]{正文}{main body}
+从文件的范围到附录之前位于版心中的内容。
+\end{term}
+
+\begin{term}[subsection]{规范性要素}{normative element}
+界定文件范围或设定条款（3.3.1）的要素。
+\end{term}
+
+\begin{term}[subsection]{资料性要素}{informative element}
+给出有助于文件的理解或使用的附加信息的要素。
+\end{term}
+
+\begin{term}[subsection]{必备要素}{required element}
+在文件中必不可少的要素。
+\end{term}
+
+\begin{term}[subsection]{可选要素}{optional element}
+在文件中存在与否取决于起草特定文件的具体需要的要素。
+\end{term}
+
+\section{文件的表述}
+\begin{term}[subsection]{条款}{provision}
+在文件中表达应用该文件需要遵守、符合、理解或作出选择的表述。
+\end{term}
+
+\begin{term}[subsection]{要求}{requirement}
+表达声明符合该文件需要满足的客观可证实的准则，并且不允许存在偏差的条款（3.3.1）。
+\end{term}
+
+\begin{term}[subsection]{指示}{instruction}
+表达需要履行的行动的条款（3.3.1）。
+\termsource{GB/T 20000.1—2014，9.3，有修改}
+\end{term}
+
+\begin{term}[subsection]{推荐}{recommendation}
+表达建议或指导的条款（3.3.1）。
+\termsource{GB/T 20000.1—2014，9.4}
+\end{term}
+
+\begin{term}[subsection]{允许}{permission}
+表达同意或许可（或有条件）去做某事的条款（3.3.1）。
+\end{term}
+
+\begin{term}[subsection]{陈述}{statement}
+阐述事实或表达信息的条款（3.3.1）。
+\termsource{GB/T 20000.1—2014，9.2，有修改}
+\end{term}
+
+\begin{term}[subsection]{条文}{text}
+由条或段表述文件要素内容所用的文字和/或文字符号。
+\end{term}

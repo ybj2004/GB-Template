@@ -1,39 +1,28 @@
-del *.aux /s
-del *.bak /s
-del *.log /s
-del *.bbl /s
-del *.blg /s
-del *.thm /s
-del *.toc /s
-del *.out /s
-del *.lot /s
-del *.lof /s
-del *.ind /s
-del *.ilg /s
-del *.idx /s
-del *.xdy /s
-del *.ist /s
+@echo off
+setlocal
+cd /d "%~dp0"
 
-xelatex --shell-escape GB-template
-bibtex GB-template
-xelatex --shell-escape GB-template
-xelatex --shell-escape GB-template
+where latexmk >nul 2>nul || (
+    echo latexmk was not found. Install TeX Live 2026 and add it to PATH.
+    exit /b 1
+)
+where zhmakeindex >nul 2>nul || (
+    echo zhmakeindex was not found. Add it to PATH.
+    exit /b 1
+)
+where biber >nul 2>nul || (
+    echo Biber was not found. Install biblatex and add Biber to PATH.
+    exit /b 1
+)
+where python >nul 2>nul || (
+    echo Python 3 was not found. Add it to PATH.
+    exit /b 1
+)
 
-del *.aux /s
-del *.bak /s
-del *.log /s
-del *.bbl /s
-del *.blg /s
-del *.thm /s
-del *.toc /s
-del *.out /s
-del *.lot /s
-del *.lof /s
-del *.ind /s
-del *.ilg /s
-del *.idx /s
-del *.xdy /s
-del *.ist /s
+if /i "%~1"=="clean" (
+    latexmk -C GB-template
+    exit /b %errorlevel%
+)
 
-
-start GB-template.pdf
+latexmk -xelatex -synctex=1 -interaction=nonstopmode -file-line-error GB-template
+exit /b %errorlevel%

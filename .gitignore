@@ -1,22 +1,38 @@
+# LaTeX intermediate files
 *.aux
+*.bbl
+*.bcf
+*.blg
+*.dvi
 *.fdb_latexmk
 *.fls
-*.out
-*.toc
-*.gz
-*.docx
-*_temp
-*_log
-*.pyc
-test.py
-*.dmp
-*.lof
-*.lot
-*.bbl
-*.blg
 *.idx
 *.ilg
 *.ind
 *.ist
+*.lof
+*.log
+*.lol
+*.lot
+*.out
+*.run.xml
+*.synctex.gz
+*.thm
+*.toc
+*.xdv
 *.xdy
+
+# Generated documents
 GB-template*.pdf
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Local files
+*.bak
+*.dmp
+*.docx
+*_log
+*_temp
+test.py
