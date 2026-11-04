@@ -238,6 +238,7 @@
     \noindent{\zihao{5}\heiti\thesection\quad}{\zihao{5}\songti#1}\par
     \vspace{.5\baselineskip}
 }
+\newcommand*{\GBsecondbullet}{\raisebox{0.15em}{\scalebox{0.75}{\textbullet}}}
 \newlist{stdlist}{itemize}{2}
 \setlist[stdlist]{
     align = left,
@@ -250,7 +251,7 @@
     topsep = 0pt
 }
 \setlist[stdlist,1]{label = {——}, leftmargin = 5\ccwd}
-\setlist[stdlist,2]{label = {\(\cdot\)}, leftmargin = 2\ccwd}
+\setlist[stdlist,2]{label = {\GBsecondbullet}, leftmargin = 2\ccwd}
 \newlist{stdenum}{enumerate}{2}
 \setlist[stdenum]{
     align = left,
@@ -294,11 +295,9 @@
     }\par
 }
 \NewDocumentCommand{\stdexample}{o m}{%
-    \par\noindent\hspace*{2\ccwd}%
-    \parbox[t]{\linewidth - 2\ccwd}{%
-        \zihao{-5}\songti
-        \@hangfrom{{\heiti 示例\IfNoValueTF{#1}{：}{#1：}}}#2%
-    }\par
+    \par\noindent\hspace*{2\ccwd}{\zihao{-5}\heiti 示例\IfNoValueTF{#1}{：}{#1：}}\par
+    \noindent\hspace*{2\ccwd}%
+    \parbox[t]{\linewidth - 2\ccwd}{\zihao{-5}\songti#2}\par
 }
 \NewDocumentCommand{\stdexampleframe}{o m}{%
     \par\noindent\hspace*{2\ccwd}{\zihao{-5}\heiti 示例\IfNoValueTF{#1}{：}{#1：}}\par
@@ -308,10 +307,14 @@
     }\par
 }
 \NewDocumentCommand{\stdunits}{m}{%
-    \par{\zihao{-5}\songti\hfill#1\par}
+    \par\noindent{\zihao{-5}\songti\hfill#1\par}
 }
 \NewDocumentCommand{\stdfootnotetext}{m m}{%
-    \par\noindent\hspace*{2\ccwd}{\zihao{-5}\songti\textsuperscript{#1}#2}\par
+    \par\noindent\hspace*{2\ccwd}%
+    \parbox[t]{\linewidth - 2\ccwd}{%
+        \zihao{-5}\songti
+        \@hangfrom{\textsuperscript{#1}}#2%
+    }\par
 }
 \NewDocumentCommand{\importantnotice}{m m}{%
     \par\noindent\hspace*{2\ccwd}{\zihao{5}\heiti#1：#2}\par
@@ -348,6 +351,10 @@
 
 
 % ----- Back Cover
+\newcommand{\makeendline}{%
+    \par\vspace{\baselineskip}
+    \noindent\centerline{\rule{0.25\linewidth}{1pt}}
+}
 \newcommand{\makecoverpage}{%
     \clearevenpage
     \newgeometry{scale = 1}
@@ -361,6 +368,7 @@
     \printbibliography
     \addcontentsline{toc}{chapter}{索引}
     \printindex
+    \makeendline
     \makecoverpage
 }
 
